@@ -1,0 +1,6 @@
+{
+  "name": "BCAS International University Placements",
+  "description": "Official international education portal for BCAS Sri Lanka. Explore study destinations, university & course finder, scholarship guides, visa resources, and campus contacts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
