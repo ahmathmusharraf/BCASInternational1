@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-bcas-navy: #00239C;
+  --color-bcas-navy-dark: #001869;
+  --color-bcas-navy-light: #173db8;
+  --color-bcas-red: #BA141A;
+  --color-bcas-red-dark: #910e13;
+  --color-bcas-red-light: #d8232a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    text-rendering: optimizeLegibility;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  h1, h2, h3, h4, .font-heading {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  /* Fluid Responsive Media Defaults */
+  img, svg, video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Multi-Monitor & Desktop Responsive Adaptations */
+@media (min-width: 1536px) {
+  .max-w-7xl {
+    max-width: 86rem; /* 1376px on 1440p / large laptops & monitors */
+  }
+}
+
+@media (min-width: 1920px) {
+  .max-w-7xl {
+    max-width: 94rem; /* 1504px on full HD / 2K desktop displays */
+  }
+}
+
+@media (min-width: 2560px) {
+  .max-w-7xl {
+    max-width: 104rem; /* 1664px on 2K / 4K ultra-wide monitors */
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmerPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-shimmer-subtle {
+  animation: shimmerPulse 3s ease-in-out infinite;
+}
+
+/* Why Choose Us Point Outline Animations */
+@keyframes pointOutlineGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 2px var(--point-accent, #00239C), 0 4px 18px -2px var(--point-glow, rgba(0, 35, 156, 0.35));
+  }
+  50% {
+    box-shadow: 0 0 0 3.5px var(--point-accent, #00239C), 0 8px 28px 2px var(--point-glow, rgba(0, 35, 156, 0.55));
+  }
+}
+
+@keyframes pointDashCycle {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -400;
+  }
+}
+
+.point-outline-animated {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease;
+  animation: pointOutlineGlow 2.8s ease-in-out infinite;
+}
+
+.point-outline-animated:hover {
+  transform: translateY(-5px);
+  animation-duration: 1.4s;
+}
+
+.point-outline-svg-runner {
+  stroke-dasharray: 14 10;
+  animation: pointDashCycle 8s linear infinite;
+}
+
+.point-number-outline {
+  opacity: 0.92;
+}
+
+/* Micro-transitions & Cards */
+.bcas-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+
+.bcas-card:hover {
+  border-color: rgba(0, 35, 156, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 35, 156, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+
+.bcas-btn {
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bcas-btn:hover {
+  transform: translateY(-1px);
+}
+
+.bcas-btn:active {
+  transform: scale(0.97);
+}
+
+/* Compact form element styling */
+.bcas-input-compact {
+  font-size: 0.8125rem;
+  line-height: 1.25rem;
+  padding: 0.45rem 0.65rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.bcas-input-compact:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 35, 156, 0.15);
+}
