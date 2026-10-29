@@ -198,6 +198,181 @@ async function startServer() {
     });
   });
 
+  // YouTube Auto-Detection API endpoint: gets title, country & university from any YouTube URL
+  app.get('/api/youtube-meta', async (req, res) => {
+    try {
+      const rawUrl = (req.query.url as string) || '';
+      if (!rawUrl) {
+        return res.status(400).json({ success: false, error: 'url query parameter is required' });
+      }
+
+      const match = rawUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+      const youtubeId = match ? match[1] : (rawUrl.length === 11 ? rawUrl : null);
+
+      if (!youtubeId) {
+        return res.status(400).json({ success: false, error: 'Invalid YouTube URL or ID' });
+      }
+
+      const standardUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
+      let title = '';
+      let authorName = '';
+
+      try {
+        const oembedRes = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(standardUrl)}&format=json`);
+        if (oembedRes.ok) {
+          const oembedData: any = await oembedRes.json();
+          title = oembedData.title || '';
+          authorName = oembedData.author_name || '';
+        }
+      } catch (err) {
+        console.warn('oEmbed fetch error:', err);
+      }
+
+      // Detection dictionary
+      const textToScan = `${title} ${authorName} ${rawUrl}`.toLowerCase();
+
+      // University mapping
+      const uniRules = [
+        { name: 'Coventry University, UK', kw: ['coventry university', 'coventry'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'University of Hertfordshire, UK', kw: ['hertfordshire', 'herts'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'University of East London, UK', kw: ['east london', 'uel'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'University of Portsmouth, UK', kw: ['portsmouth'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'Northumbria University, UK', kw: ['northumbria'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'University of Greenwich, UK', kw: ['greenwich'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'Nottingham Trent University, UK', kw: ['nottingham trent', 'ntu'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'University of Chester, UK', kw: ['chester'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'York St John University, UK', kw: ['york st john', 'ysj'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'University of the West of England, UK', kw: ['west of england', 'uwe'], dest: 'United Kingdom', flag: '🇬🇧' },
+        { name: 'Deakin University, Melbourne', kw: ['deakin university', 'deakin'], dest: 'Australia', flag: '🇦🇺' },
+        { name: 'University of Wollongong, Australia', kw: ['wollongong', 'uow'], dest: 'Australia', flag: '🇦🇺' },
+        { name: 'Swinburne University of Technology', kw: ['swinburne'], dest: 'Australia', flag: '🇦🇺' },
+        { name: 'Edith Cowan University, Australia', kw: ['edith cowan', 'ecu'], dest: 'Australia', flag: '🇦🇺' },
+        { name: 'University of Toronto, Canada', kw: ['university of toronto', 'toronto'], dest: 'Canada', flag: '🇨🇦' },
+        { name: 'Laurentian University, Canada', kw: ['laurentian'], dest: 'Canada', flag: '🇨🇦' },
+        { name: 'Middlesex University Dubai', kw: ['middlesex university', 'middlesex', 'dubai'], dest: 'United Arab Emirates', flag: '🇦🇪' },
+        { name: 'Jönköping University, Sweden', kw: ['jönköping', 'jonkoping', 'sweden'], dest: 'Sweden', flag: '🇸🇪' },
+        { name: 'Linnaeus University, Sweden', kw: ['linnaeus'], dest: 'Sweden', flag: '🇸🇪' },
+        { name: 'Hanken School of Economics, Finland', kw: ['hanken'], dest: 'Finland', flag: '🇫🇮' },
+        { name: 'Unitec Institute of Technology, NZ', kw: ['unitec'], dest: 'New Zealand', flag: '🇳🇿' },
+        { name: 'Post University, USA', kw: ['post university'], dest: 'United States', flag: '🇺🇸' },
+        { name: 'Kent State University, USA', kw: ['kent state'], dest: 'United States', flag: '🇺🇸' },
+        { name: 'MILA University, Malaysia', kw: ['mila university', 'mila'], dest: 'Malaysia', flag: '🇲🇾' },
+        { name: 'Taylor\'s University, Malaysia', kw: ['taylor'], dest: 'Malaysia', flag: '🇲🇾' }
+      ];
+
+      let detectedUni = 'International Partner University';
+      let detectedDest = 'United Kingdom';
+      let detectedFlag = '🇬🇧';
+
+      for (const rule of uniRules) {
+        if (rule.kw.some(k => textToScan.includes(k))) {
+          detectedUni = rule.name;
+          detectedDest = rule.dest;
+          detectedFlag = rule.flag;
+          break;
+        }
+      }
+
+      // If no uni matched, try country
+      if (detectedUni === 'International Partner University') {
+        if (textToScan.includes('australia') || textToScan.includes('melbourne') || textToScan.includes('sydney')) {
+          detectedDest = 'Australia';
+          detectedFlag = '🇦🇺';
+          detectedUni = 'Australia Partner University';
+        } else if (textToScan.includes('canada') || textToScan.includes('ontario')) {
+          detectedDest = 'Canada';
+          detectedFlag = '🇨🇦';
+          detectedUni = 'Canadian Partner University';
+        } else if (textToScan.includes('dubai') || textToScan.includes('uae')) {
+          detectedDest = 'United Arab Emirates';
+          detectedFlag = '🇦🇪';
+          detectedUni = 'Dubai Partner Campus';
+        } else if (textToScan.includes('sweden')) {
+          detectedDest = 'Sweden';
+          detectedFlag = '🇸🇪';
+          detectedUni = 'Swedish Partner University';
+        } else if (textToScan.includes('finland')) {
+          detectedDest = 'Finland';
+          detectedFlag = '🇫🇮';
+          detectedUni = 'Finnish Partner University';
+        } else if (textToScan.includes('new zealand') || textToScan.includes('nz')) {
+          detectedDest = 'New Zealand';
+          detectedFlag = '🇳🇿';
+          detectedUni = 'New Zealand Partner University';
+        } else if (textToScan.includes('usa') || textToScan.includes('america')) {
+          detectedDest = 'United States';
+          detectedFlag = '🇺🇸';
+          detectedUni = 'US Partner University';
+        } else if (textToScan.includes('malaysia')) {
+          detectedDest = 'Malaysia';
+          detectedFlag = '🇲🇾';
+          detectedUni = 'Malaysian Partner University';
+        }
+      }
+
+      // Clean student title
+      let studentName = title
+        .replace(/^My\s+Study\s+Abroad\s+Journey[\s:-]+/i, '')
+        .replace(/^My\s+Journey[\s:-]+/i, '')
+        .replace(/^Study\s+Abroad\s+Journey[\s:-]+/i, '')
+        .replace(/^Student\s+Story[\s:-]+/i, '')
+        .replace(/\|\s*BCAS.*$/i, '')
+        .replace(/-\s*BCAS.*$/i, '')
+        .replace(/\|\s*UK.*$/i, '')
+        .replace(/\|\s*Australia.*$/i, '')
+        .replace(/\|\s*Canada.*$/i, '')
+        .replace(/BCAS\s+Campus/gi, '')
+        .replace(/BCAS\s+International\s+University\s+Placements/gi, '')
+        .replace(/BCAS\s+International/gi, '')
+        .replace(/Study\s+Abroad/gi, '')
+        .replace(/[\s|-]+$/, '')
+        .trim();
+      if (!studentName) studentName = 'BCAS Student Story';
+
+      // Formulate applied video caption
+      let caption = '';
+      if (title) {
+        if (title.includes(':')) {
+          caption = title.split(':')[1]?.trim() || '';
+        } else if (title.includes('-')) {
+          const parts = title.split('-');
+          if (parts.length > 1) caption = parts.slice(1).join('-').trim();
+        } else if (title.includes('|')) {
+          caption = title.split('|')[0]?.trim() || '';
+        }
+      }
+      if (caption) {
+        caption = caption
+          .replace(/\|\s*BCAS.*$/i, '')
+          .replace(/-\s*BCAS.*$/i, '')
+          .replace(/\|\s*Official\s*Video.*$/i, '')
+          .trim();
+      }
+      if (!caption || caption.length < 8) {
+        caption = `BCAS degree pathway transfer to ${detectedUni} (${detectedDest}) with scholarship support.`;
+      }
+
+      return res.json({
+        success: true,
+        meta: {
+          youtubeId,
+          youtubeUrl: standardUrl,
+          title: title || 'BCAS Student Video Story',
+          studentName,
+          university: detectedUni,
+          destination: detectedDest,
+          flag: detectedFlag,
+          caption,
+          thumbnail: `https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`,
+          rawTitle: title,
+          authorName
+        }
+      });
+    } catch (err: any) {
+      return res.status(500).json({ success: false, error: err?.message || 'Server error' });
+    }
+  });
+
   // Security Verification and Health check endpoint
   app.get('/api/security', (_req, res) => {
     res.json({
