@@ -25,7 +25,8 @@ import {
   ArrowRight,
   Camera,
   Award,
-  HelpCircle
+  HelpCircle,
+  Building2
 } from 'lucide-react';
 
 export const Header: React.FC = () => {
@@ -58,6 +59,7 @@ export const Header: React.FC = () => {
   }, [isMobileMenuOpen, setIsMobileMenuOpen]);
 
   const primaryNavItems: { id: PageId; label: string; desc: string; icon: React.ComponentType<{ className?: string }> }[] = [
+    { id: 'about', label: 'About Us', desc: 'Part of BCAS Campus (British College of Applied Studies)', icon: Building2 },
     { id: 'destinations', label: 'Study Abroad', desc: 'UK, Australia, Canada, NZ & more', icon: Globe },
     { id: 'universities', label: 'Universities', desc: '100+ partner universities worldwide', icon: GraduationCap },
     { id: 'courses', label: 'Courses', desc: 'Undergraduate, Master & Foundation', icon: BookOpen },
@@ -65,6 +67,7 @@ export const Header: React.FC = () => {
   ];
 
   const secondaryNavItems: { id: PageId; label: string; desc: string; icon: React.ComponentType<{ className?: string }> }[] = [
+    { id: 'about', label: 'About BCAS Placement', desc: 'Part of BCAS Campus (British College of Applied Studies)', icon: Building2 },
     { id: 'ossd', label: 'Canadian OSSD', desc: 'Direct university entry after O/Levels via CIA', icon: Award },
     { id: 'ielts', label: 'Study IELTS', desc: 'Online & hybrid classes, mock exams & band 7+ prep', icon: Sparkles },
     { id: 'events', label: 'Event Gallery', desc: 'University fairs, seminars & visa sessions', icon: Camera },

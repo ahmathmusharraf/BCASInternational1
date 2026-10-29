@@ -193,6 +193,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         title: 'Study Abroad, IELTS & Canadian OSSD | BCAS International Placements',
         description: 'Official portal for BCAS Sri Lanka. Direct admissions, IELTS preparation classes, Canadian OSSD high school diploma & scholarships for UK, Australia, Canada, Europe & UAE.'
       },
+      about: {
+        title: 'About Us | Part of BCAS Campus (British College of Applied Studies)',
+        description: 'Learn about BCAS International University Placements, the official overseas study wing of BCAS Campus (British College of Applied Studies) established since 1999 in Sri Lanka.'
+      },
       destinations: {
         title: 'Study Abroad Destinations (UK, Australia, Canada, Europe, UAE) | BCAS',
         description: 'Explore top study destinations for Sri Lankan students. Compare tuition, post-study work rights, living costs, and entry pathways.'

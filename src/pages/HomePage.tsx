@@ -8,6 +8,7 @@ import {
 import { TestimonialVideo } from '../types';
 import { WhatsAppIcon } from '../components/common/WhatsAppIcon';
 import { sendLeadToGoogleSheets } from '../services/leadService';
+import { autoDetectYouTubeDetails } from '../utils/youtubeDetector';
 import {
   Compass,
   ArrowRight,
@@ -37,6 +38,8 @@ import {
   Clock3,
   HeartHandshake,
   DollarSign,
+  CircleDollarSign,
+  Target,
   PlaneTakeoff,
   Lightbulb,
   ClipboardList,
@@ -60,7 +63,8 @@ import {
   VolumeX,
   Youtube,
   Copy,
-  ExternalLink
+  ExternalLink,
+  Loader2
 } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
@@ -101,10 +105,50 @@ export const HomePage: React.FC = () => {
   const [heroLevel, setHeroLevel] = useState<string>('All');
   const [heroField, setHeroField] = useState<string>('All');
 
-  // Active student testimonial video modal
+  // Active student testimonial video stories with live automatic deduction of Country, University, and Student Name
+  const [videoStories, setVideoStories] = useState<TestimonialVideo[]>(TESTIMONIAL_VIDEOS);
   const [activeVideoModal, setActiveVideoModal] = useState<TestimonialVideo | null>(null);
   const [customYoutubeMap] = useState<Record<string, string>>({});
   const [activePathwayStep, setActivePathwayStep] = useState<number>(0);
+
+  // Automatically deduct Country, University, and Student Name for all Student Video Stories
+  useEffect(() => {
+    let isMounted = true;
+
+    const autoDeductVideoDetails = async () => {
+      try {
+        const enriched = await Promise.all(
+          TESTIMONIAL_VIDEOS.map(async (v) => {
+            try {
+              const videoRef = v.youtubeUrl || v.youtubeId || '';
+              if (!videoRef) return v;
+              const meta = await autoDetectYouTubeDetails(videoRef);
+              return {
+                ...v,
+                studentName: (meta.studentName && meta.studentName !== 'BCAS Student Story') ? meta.studentName : v.studentName,
+                destination: meta.destination || v.destination,
+                flag: meta.flag || v.flag,
+                currentUniversity: (meta.university && meta.university !== 'International Partner University') ? meta.university : v.currentUniversity,
+                caption: meta.caption || v.caption || v.storyHighlight
+              };
+            } catch {
+              return v;
+            }
+          })
+        );
+        if (isMounted) {
+          setVideoStories(enriched);
+        }
+      } catch {
+        // Fallback to base testimonial videos
+      }
+    };
+
+    autoDeductVideoDetails();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const getCleanYoutubeId = (rawInput?: string): string => {
     if (!rawInput) return 'VmKpPRvvoJ8';
@@ -464,394 +508,383 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 6-STEP STUDY ABROAD INFOGRAPHIC: EXACT MATCH TO USER REFERENCE (COMPACT LOW-HEIGHT DESIGN) */}
+      {/* 6-STEP STUDY ABROAD INFOGRAPHIC: EXACT MATCH TO USER REFERENCE IMAGE (INTERLOCKING RINGS WITH ALTERNATING COLORED ARCS & POINTERS) */}
       <section id="roadmap" className="max-w-7xl mx-auto px-4 sm:px-6 scroll-mt-28">
-        <div className="bg-white text-slate-900 rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-4.5 border border-slate-200/90 shadow-xs relative overflow-hidden space-y-2 sm:space-y-2.5">
+        <div className="bg-gradient-to-b from-slate-50/70 via-white to-slate-50/70 text-slate-900 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-7 border border-slate-200/90 shadow-sm relative overflow-hidden space-y-3 sm:space-y-4">
           
           {/* Subtle Ambient Background Lighting */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-blue-50/40 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-slate-50/50 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50/30 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-50/20 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Section Header: Low-Profile Compact */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 relative z-10 border-b border-slate-100 pb-2">
+          {/* Section Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10 border-b border-slate-100 pb-3">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-[#00239C] text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-[#00239C] text-[10px] sm:text-[11px] font-bold uppercase tracking-wider shadow-2xs">
                 <Sparkles className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#00239C]" />
                 <span>STRUCTURED ADMISSIONS JOURNEY</span>
               </div>
               
-              <h2 className="text-base sm:text-xl lg:text-2xl font-bold font-display tracking-tight text-slate-900 mt-0.5">
+              <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold font-display tracking-tight text-slate-900 mt-1">
                 Your 6-Step Pathway
               </h2>
               
-              <p className="text-[11px] sm:text-xs text-slate-500">
+              <p className="text-xs sm:text-sm text-slate-500">
                 From initial profile evaluation to international campus arrival in 6 transparent stages.
               </p>
             </div>
 
             {/* Quick Metrics & Action */}
             <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
-              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10.5px] font-bold">
+              <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold">
                 <Check className="w-3 h-3 text-emerald-600" />
                 <span>100% Free · 0% Agency Fees</span>
               </span>
               <button
                 type="button"
                 onClick={() => navigateTo('apply')}
-                className="px-3 py-1 sm:px-3.5 sm:py-1.5 bg-[#00239C] hover:bg-[#001869] text-white text-[11px] font-bold rounded-lg shadow-2xs hover:shadow-xs transition-all flex items-center gap-1 cursor-pointer active:scale-95"
+                className="px-3.5 py-1.5 sm:px-4 sm:py-2 bg-[#00239C] hover:bg-[#001869] text-white text-xs font-bold rounded-xl shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
               >
                 <span>Book Step 01 Counseling</span>
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* INFOGRAPHIC S-CURVE WAVE PIPELINE (LOW-HEIGHT COMPACT SVG MATCHING REFERENCE) */}
+          {/* INFOGRAPHIC INTERLOCKING RINGS PIPELINE (1:1 MATCH TO USER REFERENCE IMAGE) */}
           <div className="relative z-10">
             {/* Scrollable Container on Mobile, Full Width on Desktop */}
-            <div className="overflow-x-auto pb-1 -mx-2 px-2 scrollbar-thin">
-              <div className="min-w-[880px] max-w-[1000px] mx-auto">
+            <div className="overflow-x-auto pb-2 -mx-3 px-3 scrollbar-thin">
+              <div className="min-w-[940px] max-w-[1140px] mx-auto">
                 <svg
-                  viewBox="0 0 1000 240"
-                  className="w-full h-auto max-h-[205px] sm:max-h-[225px] select-none overflow-visible mx-auto"
+                  viewBox="0 -14 1140 388"
+                  className="w-full h-auto select-none overflow-visible mx-auto"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <defs>
-                    <filter id="badge-shadow-sm" x="-30%" y="-30%" width="160%" height="160%">
-                      <feDropShadow dx="0" dy="1.5" stdDeviation="2" floodColor="#0F172A" floodOpacity="0.18" />
-                    </filter>
-                    <filter id="disc-shadow-sm" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="0" dy="2" stdDeviation="3.5" floodColor="#0F172A" floodOpacity="0.07" />
+                    {/* Gradients matching user reference image */}
+                    <linearGradient id="grad-step-01" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#00BCD4" />
+                      <stop offset="100%" stopColor="#10B981" />
+                    </linearGradient>
+
+                    <linearGradient id="grad-step-02" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#F59E0B" />
+                      <stop offset="100%" stopColor="#EA580C" />
+                    </linearGradient>
+
+                    <linearGradient id="grad-step-03" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#FF5252" />
+                      <stop offset="100%" stopColor="#E11D48" />
+                    </linearGradient>
+
+                    <linearGradient id="grad-step-04" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#C026D3" />
+                      <stop offset="100%" stopColor="#7C3AED" />
+                    </linearGradient>
+
+                    <linearGradient id="grad-step-05" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#3B82F6" />
+                      <stop offset="100%" stopColor="#1E3A8A" />
+                    </linearGradient>
+
+                    <linearGradient id="grad-step-06" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#F43F5E" />
+                      <stop offset="100%" stopColor="#BE185D" />
+                    </linearGradient>
+
+                    {/* Neutral Smooth Gray for opposite semicircle rings */}
+                    <linearGradient id="grad-neutral-gray" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#CBD5E1" />
+                      <stop offset="100%" stopColor="#E2E8F0" />
+                    </linearGradient>
+
+                    {/* Subtle Drop Shadow for pin nodes and selected states */}
+                    <filter id="ring-subtle-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#0F172A" floodOpacity="0.06" />
                     </filter>
                   </defs>
 
-                  {/* 1. CONTINUOUS ALTERNATING WAVE RIBBON (R=70, cy=120) */}
-                  {/* Left Lead-in Line (Blue) */}
-                  <line
-                    x1="30"
-                    y1="120"
-                    x2="80"
-                    y2="120"
-                    stroke="#0284C7"
-                    strokeWidth="14"
-                    strokeLinecap="round"
-                  />
-
-                  {/* STEP 01: Bottom Loop (Blue) */}
-                  <path
-                    d="M 80 120 A 70 70 0 0 0 220 120"
-                    fill="none"
-                    stroke="#0284C7"
-                    strokeWidth="14"
-                    strokeLinecap="butt"
-                  />
-
-                  {/* STEP 02: Top Loop (Mint / Teal Green) */}
-                  <path
-                    d="M 220 120 A 70 70 0 0 1 360 120"
-                    fill="none"
-                    stroke="#00BFA5"
-                    strokeWidth="14"
-                    strokeLinecap="butt"
-                  />
-
-                  {/* STEP 03: Bottom Loop (Warm Amber / Yellow) */}
-                  <path
-                    d="M 360 120 A 70 70 0 0 0 500 120"
-                    fill="none"
-                    stroke="#FFA000"
-                    strokeWidth="14"
-                    strokeLinecap="butt"
-                  />
-
-                  {/* STEP 04: Top Loop (Coral Red) */}
-                  <path
-                    d="M 500 120 A 70 70 0 0 1 640 120"
-                    fill="none"
-                    stroke="#FF5252"
-                    strokeWidth="14"
-                    strokeLinecap="butt"
-                  />
-
-                  {/* STEP 05: Bottom Loop (Vibrant Purple) */}
-                  <path
-                    d="M 640 120 A 70 70 0 0 0 780 120"
-                    fill="none"
-                    stroke="#8B5CF6"
-                    strokeWidth="14"
-                    strokeLinecap="butt"
-                  />
-
-                  {/* STEP 06: Top Loop (Hot Pink / Magenta) */}
-                  <path
-                    d="M 780 120 A 70 70 0 0 1 920 120"
-                    fill="none"
-                    stroke="#EC4899"
-                    strokeWidth="14"
-                    strokeLinecap="butt"
-                  />
-
-                  {/* Right Lead-out Line (Hot Pink) */}
-                  <line
-                    x1="920"
-                    y1="120"
-                    x2="970"
-                    y2="120"
-                    stroke="#EC4899"
-                    strokeWidth="14"
-                    strokeLinecap="round"
-                  />
-
-                  {/* 2. CIRCULAR NODES, OUTER DARK RINGS, ICONS, APEX BADGES & INFODATA TEXT */}
+                  {/* 6 Circular Nodes: Interlocking Rings with Alternating Semicircles, Pointers, Pins & Text */}
                   {[
                     {
                       step: '01',
-                      cx: 150,
-                      isTop: false, // Ribbon is bottom, text is top
-                      color: '#0284C7',
+                      stepLabel: 'STEP 01',
+                      cx: 200,
+                      isTop: true, // Colored arc is top, pointer goes UP
+                      color: '#06B6D4',
+                      gradient: 'url(#grad-step-01)',
                       title: 'PROFILE AUDIT',
-                      line1: 'Free academic evaluation',
-                      line2: '& IELTS entry review',
-                      icon: Lightbulb
-                    },
-                    {
-                      step: '02',
-                      cx: 290,
-                      isTop: true, // Ribbon is top, text is bottom
-                      color: '#00BFA5',
-                      title: 'UNIVERSITY MATCH',
-                      line1: 'Shortlist best-fit courses',
-                      line2: 'across 170+ partner unis',
+                      desc: 'Free academic evaluation & IELTS entry review',
                       icon: Search
                     },
                     {
+                      step: '02',
+                      stepLabel: 'STEP 02',
+                      cx: 348,
+                      isTop: false, // Colored arc is bottom, pointer goes DOWN
+                      color: '#EA580C',
+                      gradient: 'url(#grad-step-02)',
+                      title: 'UNIVERSITY MATCH',
+                      desc: 'Shortlist best-fit courses across 170+ partner unis',
+                      icon: Lightbulb
+                    },
+                    {
                       step: '03',
-                      cx: 430,
-                      isTop: false, // Ribbon is bottom, text is top
-                      color: '#FFA000',
+                      stepLabel: 'STEP 03',
+                      cx: 496,
+                      isTop: true, // Colored arc is top, pointer goes UP
+                      color: '#FF5252',
+                      gradient: 'url(#grad-step-03)',
                       title: 'FAST ADMISSIONS',
-                      line1: 'Direct priority application',
-                      line2: '& fast conditional offers',
-                      icon: Users
+                      desc: 'Direct priority application & fast conditional offers',
+                      icon: Rocket
                     },
                     {
                       step: '04',
-                      cx: 570,
-                      isTop: true, // Ribbon is top, text is bottom
-                      color: '#FF5252',
+                      stepLabel: 'STEP 04',
+                      cx: 644,
+                      isTop: false, // Colored arc is bottom, pointer goes DOWN
+                      color: '#7C3AED',
+                      gradient: 'url(#grad-step-04)',
                       title: 'SCHOLARSHIP AID',
-                      line1: '£1,500 – £8,000 bursaries',
-                      line2: '& tuition discount grants',
-                      icon: Cog
+                      desc: '£1,500 – £8,000 regional bursaries & tuition grants',
+                      icon: CircleDollarSign
                     },
                     {
                       step: '05',
-                      cx: 710,
-                      isTop: false, // Ribbon is bottom, text is top
-                      color: '#8B5CF6',
+                      stepLabel: 'STEP 05',
+                      cx: 792,
+                      isTop: true, // Colored arc is top, pointer goes UP
+                      color: '#2563EB',
+                      gradient: 'url(#grad-step-05)',
                       title: 'VISA CLEARANCE',
-                      line1: '28-day financial audit',
-                      line2: '& embassy mock interviews',
-                      icon: PieChart
+                      desc: '28-day financial audit & embassy mock interviews',
+                      icon: Target
                     },
                     {
                       step: '06',
-                      cx: 850,
-                      isTop: true, // Ribbon is top, text is bottom
-                      color: '#EC4899',
+                      stepLabel: 'STEP 06',
+                      cx: 940,
+                      isTop: false, // Colored arc is bottom, pointer goes DOWN
+                      color: '#F43F5E',
+                      gradient: 'url(#grad-step-06)',
                       title: 'PRE-DEPARTURE',
-                      line1: 'Flight booking, housing',
-                      line2: '& arrival reception',
-                      icon: Rocket
+                      desc: 'Flight booking, student housing & campus reception',
+                      icon: PlaneTakeoff
                     }
                   ].map((node, idx) => {
                     const isSelected = activePathwayStep === idx;
                     const IconComponent = node.icon;
+                    const R = 74;
+                    const cy = 180;
+
                     return (
                       <g
                         key={node.step}
                         className="cursor-pointer group"
                         onClick={() => setActivePathwayStep(idx)}
                       >
-                        {/* Outer Dark Navy Ring (Matching Reference Image) */}
-                        <circle
-                          cx={node.cx}
-                          cy={120}
-                          r={54}
-                          fill="#FFFFFF"
-                          stroke="#1E293B"
-                          strokeWidth="3.5"
-                          filter="url(#disc-shadow-sm)"
-                          className="transition-all duration-200 group-hover:stroke-[#00239C]"
-                        />
+                        {/* 1. CIRCLE RING WITH 2 OPPOSING SEMICIRCLES (EXACT REFERENCE DESIGN) */}
+                        {node.isTop ? (
+                          /* Odd Nodes (1, 3, 5): Top Semicircle COLORED, Bottom Semicircle GRAY */
+                          <g filter="url(#ring-subtle-shadow)">
+                            {/* Gray Bottom Semicircle */}
+                            <path
+                              d={`M ${node.cx - R} ${cy} A ${R} ${R} 0 0 0 ${node.cx + R} ${cy}`}
+                              fill="none"
+                              stroke="url(#grad-neutral-gray)"
+                              strokeWidth="16"
+                              strokeLinecap="round"
+                              className="transition-opacity group-hover:opacity-85"
+                            />
+                            {/* Colored Top Semicircle */}
+                            <path
+                              d={`M ${node.cx - R} ${cy} A ${R} ${R} 0 0 1 ${node.cx + R} ${cy}`}
+                              fill="none"
+                              stroke={node.gradient}
+                              strokeWidth="16"
+                              strokeLinecap="round"
+                              className="transition-all duration-200 group-hover:brightness-105"
+                            />
+                          </g>
+                        ) : (
+                          /* Even Nodes (2, 4, 6): Top Semicircle GRAY, Bottom Semicircle COLORED */
+                          <g filter="url(#ring-subtle-shadow)">
+                            {/* Gray Top Semicircle */}
+                            <path
+                              d={`M ${node.cx - R} ${cy} A ${R} ${R} 0 0 1 ${node.cx + R} ${cy}`}
+                              fill="none"
+                              stroke="url(#grad-neutral-gray)"
+                              strokeWidth="16"
+                              strokeLinecap="round"
+                              className="transition-opacity group-hover:opacity-85"
+                            />
+                            {/* Colored Bottom Semicircle */}
+                            <path
+                              d={`M ${node.cx - R} ${cy} A ${R} ${R} 0 0 0 ${node.cx + R} ${cy}`}
+                              fill="none"
+                              stroke={node.gradient}
+                              strokeWidth="16"
+                              strokeLinecap="round"
+                              className="transition-all duration-200 group-hover:brightness-105"
+                            />
+                          </g>
+                        )}
 
-                        {/* Inner Clean White Disc */}
-                        <circle
-                          cx={node.cx}
-                          cy={120}
-                          r={49}
-                          fill="#FFFFFF"
-                        />
-
-                        {/* Selected Pulsing Halo */}
+                        {/* Selected Step Pulsing Ring Outline */}
                         {isSelected && (
                           <circle
                             cx={node.cx}
-                            cy={120}
-                            r={59}
+                            cy={cy}
+                            r={R + 13}
                             fill="none"
                             stroke={node.color}
                             strokeWidth="2"
-                            strokeDasharray="4 2.5"
+                            strokeDasharray="5 3"
                             className="animate-spin"
-                            style={{ transformOrigin: `${node.cx}px 120px`, animationDuration: '9s' }}
+                            style={{ transformOrigin: `${node.cx}px ${cy}px`, animationDuration: '10s' }}
                           />
                         )}
 
-                        {/* Centered Line Icon (Matching Reference Image) */}
+                        {/* 2. CENTER MINIMALIST OUTLINE ICON (EXACT REFERENCE DESIGN) */}
                         <foreignObject
-                          x={node.cx - 16}
-                          y={120 - 16}
-                          width={32}
-                          height={32}
+                          x={node.cx - 18}
+                          y={cy - 18}
+                          width={36}
+                          height={36}
                           className="pointer-events-none"
                         >
                           <div className="w-full h-full flex items-center justify-center">
                             <IconComponent
-                              className="w-7 h-7 transition-transform duration-200 group-hover:scale-110"
+                              className="w-9 h-9 transition-transform duration-200 group-hover:scale-115"
                               style={{ color: node.color }}
-                              strokeWidth={2.2}
+                              strokeWidth={1.8}
                             />
                           </div>
                         </foreignObject>
 
-                        {/* APEX CIRCULAR NUMBER BADGE (Matching Reference Image) */}
-                        {!node.isTop ? (
-                          /* Node 1, 3, 5: Badge at BOTTOM Peak (y=190) */
-                          <g filter="url(#badge-shadow-sm)">
+                        {/* 3. VERTICAL POINTER LINE & PIN DOT (EXACT REFERENCE DESIGN) */}
+                        {node.isTop ? (
+                          /* Odd Nodes (1, 3, 5): Line & Pin pointing UP */
+                          <g>
+                            {/* Vertical Line from top of circle to pin dot */}
+                            <line
+                              x1={node.cx}
+                              y1={cy - R - 8}
+                              x2={node.cx}
+                              y2={64}
+                              stroke={node.color}
+                              strokeWidth="2.4"
+                              strokeLinecap="round"
+                            />
+                            {/* Pin Circular Dot */}
                             <circle
                               cx={node.cx}
-                              cy={190}
-                              r={16.5}
+                              cy={64}
+                              r={isSelected ? 6 : 4.5}
                               fill={node.color}
-                              className="transition-transform group-hover:scale-105"
-                              style={{ transformOrigin: `${node.cx}px 190px` }}
+                              className="transition-transform group-hover:scale-125"
+                              style={{ transformOrigin: `${node.cx}px 64px` }}
                             />
-                            <text
-                              x={node.cx}
-                              y={191}
-                              fill="#FFFFFF"
-                              fontSize="12.5"
-                              fontWeight="800"
-                              fontFamily="system-ui, sans-serif"
-                              textAnchor="middle"
-                              dominantBaseline="central"
-                            >
-                              {node.step}
-                            </text>
-                          </g>
-                        ) : (
-                          /* Node 2, 4, 6: Badge at TOP Peak (y=50) */
-                          <g filter="url(#badge-shadow-sm)">
-                            <circle
-                              cx={node.cx}
-                              cy={50}
-                              r={16.5}
-                              fill={node.color}
-                              className="transition-transform group-hover:scale-105"
-                              style={{ transformOrigin: `${node.cx}px 50px` }}
-                            />
-                            <text
-                              x={node.cx}
-                              y={51}
-                              fill="#FFFFFF"
-                              fontSize="12.5"
-                              fontWeight="800"
-                              fontFamily="system-ui, sans-serif"
-                              textAnchor="middle"
-                              dominantBaseline="central"
-                            >
-                              {node.step}
-                            </text>
-                          </g>
-                        )}
 
-                        {/* INFODATA CALLOUT TEXT BLOCKS (Low-Height Compact Positioning) */}
-                        {!node.isTop ? (
-                          /* Node 1, 3, 5: Callout Text ABOVE */
-                          <g className="transition-transform duration-200 group-hover:-translate-y-0.5">
-                            <text
-                              x={node.cx}
-                              y={16}
-                              textAnchor="middle"
-                              fill={node.color}
-                              fontSize="11"
-                              fontWeight="800"
-                              fontFamily="system-ui, sans-serif"
-                              letterSpacing="0.6"
-                            >
-                              {node.title}
-                            </text>
-                            <text
-                              x={node.cx}
-                              y={31}
-                              textAnchor="middle"
-                              fill="#64748B"
-                              fontSize="9.5"
-                              fontWeight="500"
-                              fontFamily="system-ui, sans-serif"
-                            >
-                              {node.line1}
-                            </text>
-                            <text
-                              x={node.cx}
-                              y={44}
-                              textAnchor="middle"
-                              fill="#64748B"
-                              fontSize="9.5"
-                              fontWeight="500"
-                              fontFamily="system-ui, sans-serif"
-                            >
-                              {node.line2}
-                            </text>
+                            {/* Text Block ABOVE the Pin Dot */}
+                            <g className="transition-transform duration-200 group-hover:-translate-y-1">
+                              <text
+                                x={node.cx}
+                                y={14}
+                                textAnchor="middle"
+                                fill={node.color}
+                                fontSize="18"
+                                fontWeight="800"
+                                fontFamily="system-ui, sans-serif"
+                                letterSpacing="1.2"
+                              >
+                                {node.stepLabel}
+                              </text>
+                              <text
+                                x={node.cx}
+                                y={32}
+                                textAnchor="middle"
+                                fill="#0F172A"
+                                fontSize="12"
+                                fontWeight="700"
+                                fontFamily="system-ui, sans-serif"
+                              >
+                                {node.title}
+                              </text>
+                              <text
+                                x={node.cx}
+                                y={46}
+                                textAnchor="middle"
+                                fill="#64748B"
+                                fontSize="9.5"
+                                fontWeight="500"
+                                fontFamily="system-ui, sans-serif"
+                              >
+                                {node.desc}
+                              </text>
+                            </g>
                           </g>
                         ) : (
-                          /* Node 2, 4, 6: Callout Text BELOW */
-                          <g className="transition-transform duration-200 group-hover:translate-y-0.5">
-                            <text
-                              x={node.cx}
-                              y={196}
-                              textAnchor="middle"
+                          /* Even Nodes (2, 4, 6): Line & Pin pointing DOWN */
+                          <g>
+                            {/* Vertical Line from bottom of circle to pin dot */}
+                            <line
+                              x1={node.cx}
+                              y1={cy + R + 8}
+                              x2={node.cx}
+                              y2={296}
+                              stroke={node.color}
+                              strokeWidth="2.4"
+                              strokeLinecap="round"
+                            />
+                            {/* Pin Circular Dot */}
+                            <circle
+                              cx={node.cx}
+                              cy={296}
+                              r={isSelected ? 6 : 4.5}
                               fill={node.color}
-                              fontSize="11"
-                              fontWeight="800"
-                              fontFamily="system-ui, sans-serif"
-                              letterSpacing="0.6"
-                            >
-                              {node.title}
-                            </text>
-                            <text
-                              x={node.cx}
-                              y={211}
-                              textAnchor="middle"
-                              fill="#64748B"
-                              fontSize="9.5"
-                              fontWeight="500"
-                              fontFamily="system-ui, sans-serif"
-                            >
-                              {node.line1}
-                            </text>
-                            <text
-                              x={node.cx}
-                              y={224}
-                              textAnchor="middle"
-                              fill="#64748B"
-                              fontSize="9.5"
-                              fontWeight="500"
-                              fontFamily="system-ui, sans-serif"
-                            >
-                              {node.line2}
-                            </text>
+                              className="transition-transform group-hover:scale-125"
+                              style={{ transformOrigin: `${node.cx}px 296px` }}
+                            />
+
+                            {/* Text Block BELOW the Pin Dot */}
+                            <g className="transition-transform duration-200 group-hover:translate-y-1">
+                              <text
+                                x={node.cx}
+                                y={324}
+                                textAnchor="middle"
+                                fill={node.color}
+                                fontSize="18"
+                                fontWeight="800"
+                                fontFamily="system-ui, sans-serif"
+                                letterSpacing="1.2"
+                              >
+                                {node.stepLabel}
+                              </text>
+                              <text
+                                x={node.cx}
+                                y={342}
+                                textAnchor="middle"
+                                fill="#0F172A"
+                                fontSize="12"
+                                fontWeight="700"
+                                fontFamily="system-ui, sans-serif"
+                              >
+                                {node.title}
+                              </text>
+                              <text
+                                x={node.cx}
+                                y={356}
+                                textAnchor="middle"
+                                fill="#64748B"
+                                fontSize="9.5"
+                                fontWeight="500"
+                                fontFamily="system-ui, sans-serif"
+                              >
+                                {node.desc}
+                              </text>
+                            </g>
                           </g>
                         )}
                       </g>
@@ -864,71 +897,8 @@ export const HomePage: React.FC = () => {
             {/* Mobile Scroll Cue */}
             <div className="sm:hidden text-center mt-0.5">
               <span className="text-[9px] text-slate-400 font-medium">
-                ← Swipe to explore all 6 stages →
+                ← Swipe horizontally to explore all 6 stages →
               </span>
-            </div>
-
-            {/* Active Step Interactive Detail Bar (Compact Low-Profile Drawer) */}
-            <div className="bg-slate-50/90 rounded-xl p-2 sm:p-2.5 px-3 sm:px-3.5 border border-slate-200/90 flex flex-col md:flex-row md:items-center justify-between gap-2 mt-2 sm:mt-2.5 shadow-2xs">
-              <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-                <span
-                  className="w-6 h-6 sm:w-7 sm:h-7 rounded-lg text-white font-extrabold text-[11px] sm:text-xs flex items-center justify-center shrink-0 shadow-2xs"
-                  style={{
-                    backgroundColor: [
-                      '#0284C7', '#00BFA5', '#FFA000', '#FF5252', '#8B5CF6', '#EC4899'
-                    ][activePathwayStep]
-                  }}
-                >
-                  0{activePathwayStep + 1}
-                </span>
-                <div className="min-w-0">
-                  <h4 className="text-xs sm:text-[13px] font-bold text-slate-900 flex items-center gap-1.5 truncate">
-                    <span className="truncate">
-                      {[
-                        'Step 01: Profile & Transcript Audit',
-                        'Step 02: 170+ University Shortlist & Matching',
-                        'Step 03: Direct Application & Fast-Track Admissions',
-                        'Step 04: Regional Bursaries & Scholarship Grants',
-                        'Step 05: 28-Day Funds Audit & Embassy Visa Mock',
-                        'Step 06: Pre-Departure Briefing & Airport Arrival'
-                      ][activePathwayStep]}
-                    </span>
-                    <span className="text-[9.5px] font-medium text-slate-400 hidden lg:inline">
-                      (Click any node above)
-                    </span>
-                  </h4>
-                  <p className="text-[10px] sm:text-[11px] text-slate-600 line-clamp-1 md:line-clamp-none">
-                    {[
-                      'Comprehensive academic review of your G.C.E. O/L, A/L or diploma transcripts with personalized credit-transfer options and zero evaluation charges.',
-                      'Selecting the best-fit programs across accredited UK, Australia, Canada, Europe, and UAE institutions based on tuition fees, location, and post-study work rights.',
-                      'Direct university portal submission by official BCAS representatives to ensure expedited offer letters and priority conditional clearances.',
-                      'Automatic securing of £1,500 to £8,000 South Asian regional bursaries and international merit scholarships before tuition deposits are paid.',
-                      'Rigorous in-house financial vetting, genuine student SOP reviews, and realistic one-on-one embassy interview simulations ensuring a 99% visa grant rate.',
-                      'Flight reservations, student hostel bookings, currency exchange guidance, and on-ground campus reception with international student networks.'
-                    ][activePathwayStep]}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-1.5 shrink-0 self-end md:self-auto">
-                <a
-                  href={`https://wa.me/94761415273?text=Hi%20BCAS,%20I%20would%20like%20guidance%20on%20Step%200${activePathwayStep + 1}%20for%20my%20university%20application.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-2.5 py-1 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[10.5px] font-bold border border-emerald-200 transition-colors flex items-center gap-1"
-                >
-                  <WhatsAppIcon className="w-3 h-3 fill-[#25D366]" />
-                  <span>Ask Counselor</span>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('apply')}
-                  className="px-2.5 py-1 rounded-md bg-[#00239C] hover:bg-[#001869] text-white text-[10.5px] font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
-                >
-                  <span>Apply Now</span>
-                  <ArrowRight className="w-2.5 h-2.5" />
-                </button>
-              </div>
             </div>
           </div>
 
@@ -1642,38 +1612,40 @@ export const HomePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Slider Controls - Visible on desktop and mobile for smooth 4-by-4 pagination */}
-              <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl self-start sm:self-auto">
-                <button
-                  type="button"
-                  onClick={() => scrollCarousel(videoTestimonialsRef, 'left', 1120)}
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white shadow-2xs flex items-center justify-center text-slate-700 hover:text-[#00239C] hover:shadow-xs cursor-pointer active:scale-95 transition-all"
-                  aria-label="Previous 4 videos"
-                  title="Previous 4 videos"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <span className="text-[10px] sm:text-[11px] font-bold text-slate-700 px-1.5 font-mono">
-                  4 by 4 View
-                </span>
-                <button
-                  type="button"
-                  onClick={() => scrollCarousel(videoTestimonialsRef, 'right', 1120)}
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white shadow-2xs flex items-center justify-center text-slate-700 hover:text-[#00239C] hover:shadow-xs cursor-pointer active:scale-95 transition-all"
-                  aria-label="Next 4 videos"
-                  title="Next 4 videos"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+              {/* Controls: 4-by-4 View Carousel Pagination */}
+              <div className="flex items-center gap-2 self-start sm:self-auto">
+                <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(videoTestimonialsRef, 'left', 1120)}
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white shadow-2xs flex items-center justify-center text-slate-700 hover:text-[#00239C] hover:shadow-xs cursor-pointer active:scale-95 transition-all"
+                    aria-label="Previous 4 videos"
+                    title="Previous 4 videos"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="text-[10px] sm:text-[11px] font-bold text-slate-700 px-1.5 font-mono">
+                    4 by 4 View
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => scrollCarousel(videoTestimonialsRef, 'right', 1120)}
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-white shadow-2xs flex items-center justify-center text-slate-700 hover:text-[#00239C] hover:shadow-xs cursor-pointer active:scale-95 transition-all"
+                    aria-label="Next 4 videos"
+                    title="Next 4 videos"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* Video Cards Horizontal Rail - 4 by 4 strictly in ONE line (VIDEO ONLY, NO NEED TEXT) */}
+            {/* Video Cards Horizontal Rail - 4 by 4 strictly in ONE line with Deduce Country, Student Name & Applied Captions */}
             <div
               ref={videoTestimonialsRef}
               className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-2.5 sm:gap-3.5 pb-2 -mx-4 px-4 scrollbar-none md:mx-0 md:px-0 scroll-smooth"
             >
-              {TESTIMONIAL_VIDEOS.map(video => {
+              {videoStories.map(video => {
                 const effectiveId = getCleanYoutubeId(customYoutubeMap[video.id] || video.youtubeId);
                 return (
                   <div
@@ -1681,8 +1653,8 @@ export const HomePage: React.FC = () => {
                     onClick={() => {
                       setActiveVideoModal(video);
                     }}
-                    className="w-[66vw] sm:w-[240px] lg:w-[calc(25%-12px)] shrink-0 snap-start bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-xl hover:border-red-500 transition-all duration-300 cursor-pointer group relative overflow-hidden aspect-[16/10] sm:aspect-[16/9.5]"
-                    title="Click to watch student video story"
+                    className="w-[72vw] sm:w-[255px] lg:w-[calc(25%-12px)] shrink-0 snap-start bg-slate-950 rounded-xl sm:rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-xl hover:border-red-500 transition-all duration-300 cursor-pointer group relative overflow-hidden aspect-[16/10.5] sm:aspect-[16/10]"
+                    title={`Click to watch ${video.studentName}'s story in ${video.destination}`}
                   >
                     <img
                       src={`https://img.youtube.com/vi/${effectiveId}/hqdefault.jpg`}
@@ -1692,30 +1664,48 @@ export const HomePage: React.FC = () => {
                       }}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108 opacity-90"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-black/20 to-black/30" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-black/40 to-black/30" />
 
-                    {/* Top Destination Badge (no duration mentioned) */}
-                    <div className="absolute top-2 left-2">
-                      <span className="px-2 py-0.5 rounded-md bg-black/60 backdrop-blur-md text-[9px] sm:text-[10px] font-bold text-white border border-white/20 flex items-center gap-1">
+                    {/* Top Destination Badge: Automatically Deduced Country & Flag */}
+                    <div className="absolute top-2 left-2 z-10">
+                      <span className="px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md text-[9px] sm:text-[10px] font-bold text-white border border-white/20 flex items-center gap-1 shadow-xs">
                         <span>{video.flag}</span>
                         <span className="truncate max-w-[120px]">{video.destination}</span>
                       </span>
                     </div>
 
                     {/* Center Play Button with ripple effect */}
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#BA141A]/95 text-white flex items-center justify-center shadow-lg group-hover:scale-115 group-hover:bg-red-600 transition-all duration-300 ring-2 sm:ring-4 ring-white/30">
                         <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-white ml-0.5" />
                       </div>
                     </div>
 
-                    {/* Bottom subtle bar */}
-                    <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between text-[10px] text-white/90 drop-shadow-sm pointer-events-none">
-                      <span className="truncate text-blue-200 text-[10px] font-medium">{video.currentUniversity}</span>
-                      <span className="text-red-400 font-bold shrink-0 flex items-center gap-0.5 text-[9px] sm:text-[10px]">
-                        <Play className="w-2.5 h-2.5 fill-current" />
-                        <span>Watch</span>
-                      </span>
+                    {/* Bottom Area: Automatically Deduced Student Name and Applied Video Caption */}
+                    <div className="absolute bottom-2 left-2.5 right-2.5 space-y-1.5 pointer-events-none z-10">
+                      {/* Automatically Deduced Student Name and Watch Trigger */}
+                      <div className="flex items-center justify-between text-white drop-shadow-md gap-1">
+                        <div className="flex items-center gap-1.5 truncate">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 inline-block"></span>
+                          <span className="text-xs sm:text-[12.5px] font-extrabold tracking-tight truncate drop-shadow-sm text-white">
+                            {video.studentName}
+                          </span>
+                        </div>
+                        <span className="text-red-400 font-bold shrink-0 flex items-center gap-0.5 text-[9px] bg-black/50 px-1.5 py-0.5 rounded backdrop-blur-xs">
+                          <Play className="w-2.5 h-2.5 fill-current" />
+                          <span>Watch</span>
+                        </span>
+                      </div>
+
+                      {/* Applied Video Caption */}
+                      <div className="bg-slate-950/90 backdrop-blur-xs rounded-md px-1.5 py-0.5 text-[8.5px] sm:text-[9px] text-amber-200 line-clamp-1 border border-white/15 flex items-center gap-1 shadow-2xs">
+                        <span className="text-[7px] font-black bg-red-600 text-white px-1 py-0.2 rounded shrink-0">
+                          CC
+                        </span>
+                        <span className="truncate font-medium">
+                          {video.caption || video.storyHighlight}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 );
@@ -1922,7 +1912,7 @@ export const HomePage: React.FC = () => {
                     </span>
                   </h3>
                   <p className="text-[11px] text-slate-400">
-                    {activeVideoModal.fromCampus} ➔ {activeVideoModal.currentUniversity}
+                    {activeVideoModal.fromCampus} · {activeVideoModal.destination}
                   </p>
                 </div>
               </div>
@@ -1937,19 +1927,61 @@ export const HomePage: React.FC = () => {
               </button>
             </div>
 
-            {/* Real YouTube Embed Player Container (16:9 Aspect) */}
+            {/* Real YouTube Embed Player Container (16:9 Aspect) with Closed Captions Enabled */}
             <div className="relative aspect-video bg-black overflow-hidden">
               <iframe
-                src={`https://www.youtube-nocookie.com/embed/${getCleanYoutubeId(customYoutubeMap[activeVideoModal.id] || activeVideoModal.youtubeId)}?autoplay=1&rel=0&modestbranding=1`}
+                src={`https://www.youtube-nocookie.com/embed/${getCleanYoutubeId(customYoutubeMap[activeVideoModal.id] || activeVideoModal.youtubeId)}?autoplay=1&rel=0&modestbranding=1&cc_load_policy=1`}
                 title={`${activeVideoModal.studentName} - Study Abroad Story`}
                 className="w-full h-full border-0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
             </div>
+
+            {/* Applied Video Caption Banner */}
+            <div className="p-4 sm:p-5 bg-slate-950/95 border-t border-slate-800 space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="px-1.5 py-0.5 rounded bg-red-600 text-white text-[9px] font-black tracking-wider flex items-center gap-1">
+                    <span>CC</span>
+                    <span>APPLIED VIDEO CAPTION</span>
+                  </span>
+                  <span className="text-[11px] text-slate-400">Auto-extracted from YouTube</span>
+                </div>
+                <span className="text-[11px] text-blue-300 font-semibold flex items-center gap-1">
+                  <span>{activeVideoModal.flag}</span>
+                  <span>{activeVideoModal.destination}</span>
+                </span>
+              </div>
+
+              <p className="text-xs sm:text-sm text-amber-200 leading-relaxed font-medium bg-slate-900/90 rounded-xl p-3 border border-amber-400/20 shadow-inner">
+                "{activeVideoModal.caption || activeVideoModal.storyHighlight}"
+              </p>
+
+              <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-300 pt-1 border-t border-slate-800/80">
+                <div className="flex items-center gap-2 text-slate-400">
+                  <span className="text-sm">{activeVideoModal.flag}</span>
+                  <span className="text-white font-semibold">{activeVideoModal.destination}</span>
+                  <span className="text-slate-600">·</span>
+                  <span className="text-slate-400">{activeVideoModal.fromCampus}</span>
+                </div>
+
+                <a
+                  href={`https://wa.me/94761415273?text=Hi%20BCAS,%20I%20watched%20${encodeURIComponent(activeVideoModal.studentName)}'s%20video%20for%20${encodeURIComponent(activeVideoModal.destination)}%20and%20would%20like%20similar%20guidance.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-all active:scale-95"
+                >
+                  <WhatsAppIcon className="w-3.5 h-3.5 fill-white" />
+                  <span>Ask Counselor About {activeVideoModal.destination}</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       )}
+
+
     </div>
   );
 };

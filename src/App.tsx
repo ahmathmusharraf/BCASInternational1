@@ -28,6 +28,7 @@ import { TermsOfServicePage } from './pages/TermsOfServicePage';
 import { CookiePolicyPage } from './pages/CookiePolicyPage';
 import { CookiePreferencesPage } from './pages/CookiePreferencesPage';
 import { FAQPage } from './pages/FAQPage';
+import { AboutUsPage } from './pages/AboutUsPage';
 
 const MainContent: React.FC = () => {
   const { currentPage } = useApp();
@@ -36,6 +37,8 @@ const MainContent: React.FC = () => {
     switch (currentPage) {
       case 'home':
         return <HomePage />;
+      case 'about':
+        return <AboutUsPage />;
       case 'destinations':
         return <DestinationsPage />;
       case 'universities':

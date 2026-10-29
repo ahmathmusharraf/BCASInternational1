@@ -728,7 +728,8 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     currentRole: 'Cloud Systems Engineer at TechCorp, London',
     thumbnail: 'https://img.youtube.com/vi/VmKpPRvvoJ8/hqdefault.jpg',
     videoDuration: '2:15',
-    storyHighlight: 'Saved 2 years of London living expenses by completing the Pearson BTEC HND at BCAS Colombo before transferring into Year 3 at Coventry.',
+    storyHighlight: 'Saved 2 years of living expenses by completing Pearson BTEC at BCAS Colombo before progressing to the UK.',
+    caption: 'Saved 2 years of living expenses by completing Pearson BTEC at BCAS before progressing to the UK.',
     youtubeId: 'VmKpPRvvoJ8',
     youtubeUrl: 'https://youtu.be/VmKpPRvvoJ8?si=4lwmXfRLWbv9QDir',
     viewsCount: '4.8k'
@@ -745,6 +746,7 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     thumbnail: 'https://img.youtube.com/vi/V_jLJpa3vbs/hqdefault.jpg',
     videoDuration: '1:48',
     storyHighlight: 'Secured an AUD 10,000 international student merit scholarship through BCAS Kandy counseling and cleared the Australian visa in 14 days.',
+    caption: 'Secured an AUD 10,000 merit scholarship through BCAS Kandy and cleared Australian visa in 14 days.',
     youtubeId: 'V_jLJpa3vbs',
     youtubeUrl: 'https://youtu.be/V_jLJpa3vbs?si=IRbEuwtN_HbNIZ33',
     viewsCount: '6.2k'
@@ -760,7 +762,8 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     currentRole: 'Software Developer, Toronto Tech Hub',
     thumbnail: 'https://img.youtube.com/vi/WBRO7qeYf5o/hqdefault.jpg',
     videoDuration: '2:40',
-    storyHighlight: 'Completed the Canadian OSSD course with BCAS International University Placements and received direct admission without foundation.',
+    storyHighlight: 'Completed the international pathway at BCAS and received direct Canadian admission without foundation.',
+    caption: 'Completed international pathway at BCAS and received direct Canadian admission without foundation.',
     youtubeId: 'WBRO7qeYf5o',
     youtubeUrl: 'https://youtu.be/WBRO7qeYf5o?si=AU94HycLWvPb5h0t',
     viewsCount: '5.1k'
@@ -777,6 +780,7 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     thumbnail: 'https://img.youtube.com/vi/IO6UGECSz20/hqdefault.jpg',
     videoDuration: '0:55',
     storyHighlight: 'Studied from BCAS Eastern Campus in Kalmunai. BCAS managed my entire offer letter, student visa, and accommodation in Dubai.',
+    caption: 'Studied from BCAS Eastern Campus in Kalmunai. BCAS managed entire offer letter, visa, and Dubai housing.',
     youtubeId: 'IO6UGECSz20',
     youtubeUrl: 'https://youtube.com/shorts/IO6UGECSz20?si=bj3NxPyF684VS1-U',
     viewsCount: '3.9k'
@@ -792,7 +796,8 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     currentRole: 'Paralegal Associate, London Legal chambers',
     thumbnail: 'https://img.youtube.com/vi/sWZXt7SZvDU/hqdefault.jpg',
     videoDuration: '0:50',
-    storyHighlight: 'Direct progression from BCAS Law School into Hertfordshire final year. Bar Vocational Studies guidance arranged by BCAS.',
+    storyHighlight: 'Direct overseas progression from BCAS Campus with professional student visa and documentation guidance.',
+    caption: 'Direct overseas progression from BCAS Campus with fast-track student visa clearance.',
     youtubeId: 'sWZXt7SZvDU',
     youtubeUrl: 'https://youtube.com/shorts/sWZXt7SZvDU?si=FS-J9E611C0U6jkH',
     viewsCount: '4.4k'
@@ -808,7 +813,8 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     currentRole: 'Junior Site Engineer, New South Wales Infrastructure',
     thumbnail: 'https://img.youtube.com/vi/HqC_QoXNP_c/hqdefault.jpg',
     videoDuration: '0:45',
-    storyHighlight: 'Engineers Australia accredited transfer from BCAS Engineering diploma into Year 2 of Wollongong. Post-study work visa secured.',
+    storyHighlight: 'Direct accredited transfer from BCAS diploma into Year 2 in Australia. Post-study work visa secured.',
+    caption: 'Direct accredited transfer from BCAS diploma into Year 2 in Australia. Post-study work visa secured.',
     youtubeId: 'HqC_QoXNP_c',
     youtubeUrl: 'https://youtube.com/shorts/HqC_QoXNP_c?si=6TMuh-J7hcVoNvet',
     viewsCount: '5.8k'
@@ -824,7 +830,8 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     currentRole: 'Supply Chain Analyst, Gothenburg',
     thumbnail: 'https://img.youtube.com/vi/JAUonrQCFkA/hqdefault.jpg',
     videoDuration: '0:58',
-    storyHighlight: 'Explored European Schengen tuition value with BCAS. Sweden gave me 1 year post-study job seeker visa and world-class innovation culture.',
+    storyHighlight: 'Explored European Schengen study opportunities with BCAS. Secured 1-year post-study job seeker visa in Sweden.',
+    caption: 'Explored European Schengen study opportunities with BCAS. Secured 1-year post-study visa in Sweden.',
     youtubeId: 'JAUonrQCFkA',
     youtubeUrl: 'https://youtube.com/shorts/JAUonrQCFkA?si=otyO3GaVZNekY9Xy',
     viewsCount: '4.1k'
@@ -841,6 +848,7 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     thumbnail: 'https://img.youtube.com/vi/9IJg7yM5PEc/hqdefault.jpg',
     videoDuration: '0:52',
     storyHighlight: 'Affordable English-speaking European island education. BCAS processed my visa without Schengen travel complications.',
+    caption: 'Affordable English-speaking EU island education in Malta. BCAS processed visa without complications.',
     youtubeId: '9IJg7yM5PEc',
     youtubeUrl: 'https://youtube.com/shorts/9IJg7yM5PEc?si=2BhKzBSCY3fixgMY',
     viewsCount: '3.6k'
@@ -856,7 +864,8 @@ export const TESTIMONIAL_VIDEOS: TestimonialVideo[] = [
     currentRole: 'Security Operations Analyst, Hampshire UK',
     thumbnail: 'https://img.youtube.com/vi/wdg6UrfbiNQ/hqdefault.jpg',
     videoDuration: '0:48',
-    storyHighlight: 'Direct transfer to University of Portsmouth after completing Pearson BTEC computing credentials at BCAS Colombo.',
+    storyHighlight: 'Direct UK transfer after completing Pearson BTEC credentials at BCAS Colombo Campus.',
+    caption: 'Direct UK transfer after completing Pearson BTEC credentials at BCAS Colombo Campus.',
     youtubeId: 'wdg6UrfbiNQ',
     youtubeUrl: 'https://youtube.com/shorts/wdg6UrfbiNQ?si=ORT2viiXXkAApUsW',
     viewsCount: '4.7k'

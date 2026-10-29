@@ -1,5 +1,6 @@
 export type PageId =
   | 'home'
+  | 'about'
   | 'destinations'
   | 'universities'
   | 'courses'
@@ -141,6 +142,7 @@ export interface TestimonialVideo {
   thumbnail: string;
   videoDuration: string;
   storyHighlight: string;
+  caption?: string;
   videoUrl?: string;
   youtubeId?: string;
   youtubeUrl?: string;

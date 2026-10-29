@@ -125,6 +125,14 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-sm">
               <li>
                 <button
+                  onClick={() => navigateTo('about')}
+                  className="hover:text-white transition-colors cursor-pointer text-left font-semibold text-blue-200 flex items-center gap-1.5"
+                >
+                  <span>About Us (Part of BCAS Campus)</span>
+                </button>
+              </li>
+              <li>
+                <button
                   onClick={() => navigateTo('apply')}
                   className="hover:text-white transition-colors cursor-pointer text-left font-medium text-blue-300"
                 >
