@@ -7,7 +7,12 @@
  *  - Primary / Vercel: https://bcasinternationalplacement.vercel.app/
  *  - Custom Domain:    https://bcasinternational.lk
  * 
- * Email Alerts Recipient: ahmathmusharraf@gmail.com
+ * Active Deployment:
+ *  - Deployment ID: AKfycbwp7gjiLG2IJ5-evSnKcxs5iPctQBFlNS_e_xqptUAynPdmAD-7OlejL_6vP3qJdBPJYQ
+ *  - Web App URL:   https://script.google.com/macros/s/AKfycbwp7gjiLG2IJ5-evSnKcxs5iPctQBFlNS_e_xqptUAynPdmAD-7OlejL_6vP3qJdBPJYQ/exec
+ *  - Execute as:    ahmathmusharraf@gmail.com
+ *  - Who has access: Anyone
+ *  - Email Alerts:  ahmathmusharraf@gmail.com
  * ========================================================================
  *
  * HOW TO USE THIS SCRIPT:
