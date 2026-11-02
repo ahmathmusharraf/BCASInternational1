@@ -101,15 +101,14 @@ export const LeadGenerationForm: React.FC<LeadGenerationFormProps> = ({
 
       case 'email':
         if (!value.trim()) return 'Email address is required.';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) return 'Please enter a valid email address (e.g. name@domain.com).';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) return 'Please enter a valid email address only (e.g. name@domain.com).';
         return '';
 
       case 'phone':
         if (!value.trim()) return 'Phone or WhatsApp number is required.';
-        // Allows +, digits, spaces, hyphens, min 7 digits
-        const digitsOnly = value.replace(/\D/g, '');
-        if (digitsOnly.length < 7 || digitsOnly.length > 15) {
-          return 'Please enter a valid phone number (e.g. +94 77 123 4567).';
+        const digitsOnly = value.replace(/[^0-9]/g, '');
+        if (digitsOnly.length < 7 || digitsOnly.length > 15 || !/^\+?[0-9]+$/.test(value.trim())) {
+          return 'Phone / WhatsApp must contain numbers only (minimum 7 digits).';
         }
         return '';
 
@@ -135,9 +134,10 @@ export const LeadGenerationForm: React.FC<LeadGenerationFormProps> = ({
   };
 
   const handleChange = (field: keyof LeadFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    const sanitizedVal = field === 'phone' ? value.replace(/[^0-9+]/g, '') : value;
+    setFormData(prev => ({ ...prev, [field]: sanitizedVal }));
     if (touched[field]) {
-      const err = validateField(field, value);
+      const err = validateField(field, sanitizedVal);
       setErrors(prev => ({ ...prev, [field]: err }));
     }
     if (errorMessage) {
@@ -420,11 +420,13 @@ export const LeadGenerationForm: React.FC<LeadGenerationFormProps> = ({
               <input
                 type="tel"
                 name="phone"
+                inputMode="numeric"
+                pattern="[0-9+]*"
                 required
                 value={formData.phone}
                 onChange={e => handleChange('phone', e.target.value)}
                 onBlur={() => handleBlur('phone')}
-                placeholder="+94 77 123 4567"
+                placeholder="+94771234567"
                 disabled={submitting}
                 className={`w-full pl-9 pr-3 py-2 sm:py-2.5 rounded-xl border text-xs sm:text-sm text-slate-900 placeholder-slate-400 bg-white transition-all focus:outline-none focus:ring-2 ${
                   errors.phone && touched.phone
