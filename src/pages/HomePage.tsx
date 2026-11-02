@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import {
   DESTINATIONS,
+  UNIVERSITIES,
   SUCCESS_STORIES,
   TESTIMONIAL_VIDEOS
 } from '../data/mockData';
@@ -178,6 +179,7 @@ export const HomePage: React.FC = () => {
   // Quick Enquiry Form state on HomePage (compact pre-assessment)
   const [quickEnquiry, setQuickEnquiry] = useState({
     name: '',
+    email: '',
     phone: '',
     destination: 'United Kingdom',
     campus: 'Colombo Campus',
@@ -202,15 +204,30 @@ export const HomePage: React.FC = () => {
 
   const handleQuickEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!quickEnquiry.name.trim() || !quickEnquiry.phone.trim()) {
-      showToast('Please enter your name and contact phone number', 'warning');
+    if (!quickEnquiry.name.trim()) {
+      showToast('Please enter your full name', 'warning');
       return;
     }
+
+    // Email strict validation - email only
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!quickEnquiry.email.trim() || !emailRegex.test(quickEnquiry.email.trim())) {
+      showToast('Please enter a valid email address only (e.g. name@example.com)', 'warning');
+      return;
+    }
+
+    // Phone strict validation - numbers only, min 7 digits
+    const digitsOnly = quickEnquiry.phone.replace(/[^0-9]/g, '');
+    if (!digitsOnly || digitsOnly.length < 7 || !/^\+?[0-9]+$/.test(quickEnquiry.phone.trim())) {
+      showToast('Phone / WhatsApp must contain numbers only (minimum 7 digits)', 'warning');
+      return;
+    }
+
     setQuickEnquiryLoading(true);
     try {
       const payload = {
         fullName: quickEnquiry.name.trim(),
-        email: `${quickEnquiry.name.toLowerCase().replace(/[^a-z0-9]/g, '') || 'applicant'}@enquiry.bcas.lk`,
+        email: quickEnquiry.email.trim(),
         phone: quickEnquiry.phone.trim(),
         cityOrCampus: quickEnquiry.campus,
         currentQualification: 'G.C.E. A/L Completed',
@@ -238,7 +255,7 @@ export const HomePage: React.FC = () => {
       // Automatically sync inquiry directly into Google Sheets
       sendLeadToGoogleSheets({
         fullName: quickEnquiry.name.trim(),
-        email: `${quickEnquiry.name.toLowerCase().replace(/[^a-z0-9]/g, '') || 'applicant'}@enquiry.bcas.lk`,
+        email: quickEnquiry.email.trim(),
         phone: quickEnquiry.phone.trim(),
         interest: `${quickEnquiry.subject} (${quickEnquiry.destination}) - ${quickEnquiry.campus}`,
         message: 'Direct website homepage quick consultation inquiry.',
@@ -947,92 +964,370 @@ export const HomePage: React.FC = () => {
           ))}
         </div>
 
-        {/* Creative Destination Cards Grid / Carousel */}
-        <div
-          ref={destinationsRef}
-          className="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-4 pb-3 sm:pb-4 -mx-4 px-4 scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-4 md:mx-0 md:px-0 md:overflow-visible"
-        >
-          {DESTINATIONS.filter(
-            dest => activeDestinationTab === 'All' || dest.name.includes(activeDestinationTab)
-          ).map(dest => (
-            <div
-              key={dest.id}
-              onClick={() => navigateTo('destinations', { destination: dest.id })}
-              className="w-[72vw] sm:w-[280px] md:w-auto shrink-0 snap-center md:snap-align-none group bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 overflow-hidden shadow-2xs hover:shadow-xl hover:border-blue-300 transition-all duration-300 cursor-pointer flex flex-col justify-between"
-            >
-              <div>
-                <div className="relative h-36 sm:h-44 md:h-48 overflow-hidden bg-slate-900">
-                  <img
-                    src={dest.heroImage}
-                    alt={dest.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
-                  
-                  {/* Top Flag & Currency Badge */}
-                  <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold text-slate-900 flex items-center gap-1 sm:gap-1.5 shadow-xs">
-                    <span className="text-sm sm:text-base leading-none">{dest.flag}</span>
-                    <span>{dest.name}</span>
+        {/* Top Study Abroad Destinations: Vertical-Wise View (One Country Selected) OR Grid View (All) */}
+        {activeDestinationTab !== 'All' ? (
+          (() => {
+            const selectedDest =
+              DESTINATIONS.find(
+                d => d.name === activeDestinationTab || d.id === activeDestinationTab || d.name.toLowerCase().includes(activeDestinationTab.toLowerCase())
+              ) || DESTINATIONS[0];
+            const partnerUnis = UNIVERSITIES.filter(
+              u => u.country.toLowerCase().includes(selectedDest.name.toLowerCase()) || selectedDest.name.toLowerCase().includes(u.country.toLowerCase())
+            );
+
+            return (
+              <div className="space-y-4 sm:space-y-6 animate-fade-in max-w-5xl mx-auto">
+                {/* 1. Top Header Banner & Navigation */}
+                <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-5 bg-gradient-to-r from-blue-50 via-indigo-50/60 to-white rounded-2xl sm:rounded-3xl border border-blue-200/80 shadow-2xs">
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl sm:text-4xl leading-none drop-shadow-xs">{selectedDest.flag}</span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-lg sm:text-2xl font-bold font-display text-slate-900 tracking-tight">
+                          {selectedDest.name}
+                        </h3>
+                        <span className="text-[10px] sm:text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-blue-100/90 text-[#00239C] border border-blue-200">
+                          {selectedDest.code} · {selectedDest.currency}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-600 font-medium">
+                        {selectedDest.tagline}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="absolute top-2.5 right-2.5 bg-slate-900/80 backdrop-blur-xs px-1.5 py-0.5 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-mono font-bold text-white border border-white/20">
-                    {dest.currency}
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setActiveDestinationTab('All')}
+                      className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
+                    >
+                      <Layers className="w-3.5 h-3.5 text-[#00239C]" />
+                      <span>Back to All Destinations</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => navigateTo('destinations', { destination: selectedDest.id })}
+                      className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-[#00239C] hover:bg-[#001869] text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-2xs transition-all active:scale-95 cursor-pointer"
+                    >
+                      <span>Full Country Directory</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* 2. Hero Visual & Country Strategic Overview (Vertical Stack Item 1) */}
+                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 shadow-sm bg-slate-950">
+                  <div className="h-52 sm:h-64 lg:h-72 w-full relative">
+                    <img
+                      src={selectedDest.heroImage}
+                      alt={selectedDest.name}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
+                    
+                    <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white space-y-2">
+                      <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] sm:text-xs font-semibold border border-white/25">
+                        <Globe2 className="w-3.5 h-3.5 text-blue-300" />
+                        <span>Direct Admission & Credit Transfer Pathway</span>
+                      </div>
+                      <h3 className="text-xl sm:text-3xl lg:text-4xl font-bold font-display tracking-tight">
+                        Study in {selectedDest.name}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-200 max-w-2xl leading-relaxed">
+                        {selectedDest.overview}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3. Financial & Academic Metrics (Vertical Stack Item 2) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                  <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1">
+                    <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold">
+                      <CircleDollarSign className="w-4 h-4 text-[#00239C]" />
+                      <span>Avg. Annual Tuition</span>
+                    </div>
+                    <div className="text-sm sm:text-base font-bold text-slate-900 font-mono">
+                      {selectedDest.avgTuitionPerYear}
+                    </div>
+                    <p className="text-[10px] text-slate-500">Scholarship opportunities via BCAS</p>
                   </div>
 
-                  {/* Post-Study Visa Ribbon */}
-                  <div className="absolute bottom-2 left-2.5 right-2.5 text-white">
-                    <span className="text-[9px] sm:text-[10px] text-blue-200 font-bold uppercase tracking-wider block">
-                      Post-Study Work Visa
-                    </span>
-                    <p className="text-[11px] sm:text-xs font-semibold leading-tight line-clamp-1 text-white">
-                      {dest.postStudyWorkVisa}
+                  <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1">
+                    <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold">
+                      <DollarSign className="w-4 h-4 text-emerald-600" />
+                      <span>Estimated Living Cost</span>
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                      {selectedDest.avgLivingPerYear}
+                    </div>
+                    <p className="text-[10px] text-slate-500">Official proof of funds estimate</p>
+                  </div>
+
+                  <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1">
+                    <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold">
+                      <Briefcase className="w-4 h-4 text-indigo-600" />
+                      <span>Term-Time Work Rights</span>
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                      {selectedDest.workDuringStudy}
+                    </div>
+                    <p className="text-[10px] text-slate-500">Full-time permitted during vacation</p>
+                  </div>
+
+                  <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-1">
+                    <div className="flex items-center gap-2 text-slate-500 text-xs font-semibold">
+                      <Calendar className="w-4 h-4 text-amber-600" />
+                      <span>Primary Intakes</span>
+                    </div>
+                    <div className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">
+                      {selectedDest.primaryIntakes}
+                    </div>
+                    <p className="text-[10px] text-slate-500">Apply 4–6 months ahead for visa</p>
+                  </div>
+                </div>
+
+                {/* 4. Post-Study Work Visa (PSWV) Rights (Vertical Stack Item 3) */}
+                <div className="p-4 sm:p-6 bg-gradient-to-br from-slate-900 via-[#001869] to-[#00239C] text-white rounded-2xl sm:rounded-3xl border border-blue-800 shadow-md space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-xs font-bold border border-white/15">
+                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                      <span>POST-STUDY WORK PRIVILEGES</span>
+                    </div>
+                    <a
+                      href={selectedDest.officialImmigrationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs text-blue-200 hover:text-white underline cursor-pointer"
+                    >
+                      <span>{selectedDest.officialImmigrationName}</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <h4 className="text-base sm:text-xl font-bold font-display text-white">
+                      {selectedDest.postStudyWorkVisa}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-blue-100/90 leading-relaxed max-w-3xl">
+                      Graduates from accredited programmes in {selectedDest.name} enjoy legally guaranteed work rights, enabling international career establishment, tuition recovery, and direct pathway eligibility for skilled migration.
                     </p>
                   </div>
                 </div>
 
-                <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
-                  <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2">
-                    {dest.tagline}
-                  </p>
-
-                  {/* Key Stats Matrix */}
-                  <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-1.5 sm:pt-2 border-t border-slate-100 text-[10px] sm:text-[11px]">
-                    <div className="p-1.5 sm:p-2 bg-slate-50 rounded-lg sm:rounded-xl">
-                      <span className="text-slate-400 block text-[8px] sm:text-[9px] uppercase font-bold">Avg. Tuition</span>
-                      <span className="font-bold text-slate-900 font-mono text-[10px] sm:text-[11px] truncate block">
-                        {dest.avgTuitionPerYear.split('–')[0]}
-                      </span>
-                    </div>
-                    <div className="p-1.5 sm:p-2 bg-slate-50 rounded-lg sm:rounded-xl">
-                      <span className="text-slate-400 block text-[8px] sm:text-[9px] uppercase font-bold">Part-Time Work</span>
-                      <span className="font-bold text-slate-900 text-[10px] sm:text-[11px] truncate block">
-                        20 hrs / week
-                      </span>
-                    </div>
+                {/* 5. Key Advantages (Vertical Stack Item 4) */}
+                <div className="p-4 sm:p-6 bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-2xs space-y-3">
+                  <div className="flex items-center gap-2 text-[#00239C] text-xs font-bold uppercase tracking-wider">
+                    <Award className="w-4 h-4 text-[#00239C]" />
+                    <span>Why Sri Lankan Students Choose {selectedDest.name}</span>
                   </div>
-
-                  {/* Top Cities */}
-                  <div className="flex flex-wrap gap-1">
-                    {dest.popularCities.slice(0, 3).map((city, idx) => (
-                      <span key={idx} className="text-[9px] sm:text-[10px] bg-blue-50/70 text-[#00239C] px-1.5 py-0.2 sm:px-2 sm:py-0.5 rounded font-medium">
-                        {city}
-                      </span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
+                    {selectedDest.topReasons.map((reason, idx) => (
+                      <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100">
+                        <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 mt-0.5 font-bold text-xs">
+                          ✓
+                        </div>
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                          {reason}
+                        </p>
+                      </div>
                     ))}
                   </div>
                 </div>
-              </div>
 
-              <div className="p-3 pt-0 sm:p-4 sm:pt-0">
-                <div className="pt-2 sm:pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-bold text-[#00239C]">
-                  <span>Explore Programs & Visas</span>
-                  <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform" />
+                {/* 6. Popular Student Cities & Partner Universities (Vertical Stack Item 5) */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Popular Cities */}
+                  <div className="p-4 sm:p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+                    <div className="flex items-center gap-2 text-slate-800 text-xs font-bold uppercase tracking-wider">
+                      <MapPin className="w-4 h-4 text-rose-600" />
+                      <span>Major Student Cities</span>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      BCAS alumni networks and student support communities are established in:
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-1">
+                      {selectedDest.popularCities.map((city, idx) => (
+                        <div key={idx} className="px-3 py-1.5 rounded-xl bg-blue-50/80 text-[#00239C] text-xs font-semibold border border-blue-100 flex items-center gap-1.5">
+                          <Building2 className="w-3.5 h-3.5 text-[#00239C]" />
+                          <span>{city}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Partner Universities in this Destination */}
+                  <div className="p-4 sm:p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-slate-800 text-xs font-bold uppercase tracking-wider">
+                        <GraduationCap className="w-4 h-4 text-[#00239C]" />
+                        <span>Partner Universities in {selectedDest.name}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => navigateTo('destinations', { destination: selectedDest.id })}
+                        className="text-[11px] font-bold text-[#00239C] hover:underline flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>View All ({partnerUnis.length})</span>
+                        <ChevronRight className="w-3 h-3" />
+                      </button>
+                    </div>
+                    <div className="space-y-2">
+                      {partnerUnis.slice(0, 3).map((uni) => (
+                        <div
+                          key={uni.id}
+                          onClick={() => navigateTo('destinations', { destination: selectedDest.id, university: uni.id })}
+                          className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/80 hover:border-blue-200 transition-all cursor-pointer flex items-center justify-between gap-3 group"
+                        >
+                          <div>
+                            <h5 className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-[#00239C] transition-colors">
+                              {uni.name}
+                            </h5>
+                            <p className="text-[10px] sm:text-[11px] text-slate-500">
+                              {uni.city} · {uni.popularSubjects?.slice(0, 2).join(', ') || uni.type}
+                            </p>
+                          </div>
+                          <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#00239C] group-hover:translate-x-1 transition-all shrink-0" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* 7. Action Footer (Vertical Stack Item 6) */}
+                <div className="p-4 sm:p-6 bg-gradient-to-r from-slate-50 to-blue-50/50 rounded-2xl sm:rounded-3xl border border-blue-200/80 flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <h4 className="text-sm sm:text-base font-bold text-slate-900">
+                      Ready to Begin Your Pathway to {selectedDest.name}?
+                    </h4>
+                    <p className="text-xs text-slate-600">
+                      Get pre-assessed for direct admissions, scholarships, and visa processing at no charge.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setQuickEnquiry(prev => ({ ...prev, destination: selectedDest.name }));
+                        const el = document.getElementById('enquiry');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="px-4 py-2 rounded-xl bg-[#00239C] hover:bg-[#001869] text-white text-xs sm:text-sm font-bold shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-2"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>Enquire for {selectedDest.name}</span>
+                    </button>
+
+                    <a
+                      href={`https://wa.me/94761415273?text=Hi%20BCAS,%20I%20would%20like%20guidance%20on%20studying%20in%20${encodeURIComponent(selectedDest.name)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all active:scale-95 cursor-pointer flex items-center gap-2"
+                    >
+                      <WhatsAppIcon className="w-3.5 h-3.5" />
+                      <span>WhatsApp Counselor</span>
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveDestinationTab('All')}
+                      className="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-semibold border border-slate-300 transition-all cursor-pointer flex items-center gap-1.5"
+                    >
+                      <Layers className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Back to All Destinations</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })()
+        ) : (
+          /* Creative Destination Cards Grid / Carousel (When "All" is active) */
+          <div
+            ref={destinationsRef}
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-4 pb-3 sm:pb-4 -mx-4 px-4 scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-4 md:mx-0 md:px-0 md:overflow-visible"
+          >
+            {DESTINATIONS.map(dest => (
+              <div
+                key={dest.id}
+                onClick={() => setActiveDestinationTab(dest.name)}
+                className="w-[72vw] sm:w-[280px] md:w-auto shrink-0 snap-center md:snap-align-none group bg-white rounded-2xl sm:rounded-3xl border border-slate-200/90 overflow-hidden shadow-2xs hover:shadow-xl hover:border-blue-300 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+                title={`Click to view ${dest.name} details vertically`}
+              >
+                <div>
+                  <div className="relative h-36 sm:h-44 md:h-48 overflow-hidden bg-slate-900">
+                    <img
+                      src={dest.heroImage}
+                      alt={dest.name}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-108"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/25 to-transparent" />
+                    
+                    {/* Top Flag & Currency Badge */}
+                    <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold text-slate-900 flex items-center gap-1 sm:gap-1.5 shadow-xs">
+                      <span className="text-sm sm:text-base leading-none">{dest.flag}</span>
+                      <span>{dest.name}</span>
+                    </div>
 
-          {/* Global Card */}
-          {activeDestinationTab === 'All' && (
+                    <div className="absolute top-2.5 right-2.5 bg-slate-900/80 backdrop-blur-xs px-1.5 py-0.5 rounded-md sm:rounded-lg text-[9px] sm:text-[10px] font-mono font-bold text-white border border-white/20">
+                      {dest.currency}
+                    </div>
+
+                    {/* Post-Study Visa Ribbon */}
+                    <div className="absolute bottom-2 left-2.5 right-2.5 text-white">
+                      <span className="text-[9px] sm:text-[10px] text-blue-200 font-bold uppercase tracking-wider block">
+                        Post-Study Work Visa
+                      </span>
+                      <p className="text-[11px] sm:text-xs font-semibold leading-tight line-clamp-1 text-white">
+                        {dest.postStudyWorkVisa}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-3 sm:p-4 space-y-2 sm:space-y-3">
+                    <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed line-clamp-2">
+                      {dest.tagline}
+                    </p>
+
+                    {/* Key Stats Matrix */}
+                    <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-1.5 sm:pt-2 border-t border-slate-100 text-[10px] sm:text-[11px]">
+                      <div className="p-1.5 sm:p-2 bg-slate-50 rounded-lg sm:rounded-xl">
+                        <span className="text-slate-400 block text-[8px] sm:text-[9px] uppercase font-bold">Avg. Tuition</span>
+                        <span className="font-bold text-slate-900 font-mono text-[10px] sm:text-[11px] truncate block">
+                          {dest.avgTuitionPerYear.split('–')[0]}
+                        </span>
+                      </div>
+                      <div className="p-1.5 sm:p-2 bg-slate-50 rounded-lg sm:rounded-xl">
+                        <span className="text-slate-400 block text-[8px] sm:text-[9px] uppercase font-bold">Part-Time Work</span>
+                        <span className="font-bold text-slate-900 text-[10px] sm:text-[11px] truncate block">
+                          20 hrs / week
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Top Cities */}
+                    <div className="flex flex-wrap gap-1">
+                      {dest.popularCities.slice(0, 3).map((city, idx) => (
+                        <span key={idx} className="text-[9px] sm:text-[10px] bg-blue-50/70 text-[#00239C] px-1.5 py-0.2 sm:px-2 sm:py-0.5 rounded font-medium">
+                          {city}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 pt-0 sm:p-4 sm:pt-0">
+                  <div className="pt-2 sm:pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] sm:text-xs font-bold text-[#00239C]">
+                    <span>View {dest.name} Details</span>
+                    <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Global Card */}
             <div
               onClick={() => navigateTo('destinations')}
               className="w-[72vw] sm:w-[280px] md:w-auto shrink-0 snap-center md:snap-align-none group bg-gradient-to-br from-[#001869] via-[#00239C] to-slate-950 text-white rounded-2xl sm:rounded-3xl border border-blue-800 p-4 sm:p-6 shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col justify-between relative overflow-hidden"
@@ -1062,8 +1357,8 @@ export const HomePage: React.FC = () => {
                 <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Mobile Swipe Cue Dots */}
         <div className="flex md:hidden items-center justify-center gap-1.5 pt-1.5 text-slate-400 text-[11px]">
@@ -1462,7 +1757,7 @@ export const HomePage: React.FC = () => {
                     type="button"
                     onClick={() => {
                       setQuickEnquirySubmitted(false);
-                      setQuickEnquiry({ name: '', phone: '', destination: 'United Kingdom', campus: 'Colombo Campus', subject: 'Computing & IT' });
+                      setQuickEnquiry({ name: '', email: '', phone: '', destination: 'United Kingdom', campus: 'Colombo Campus', subject: 'Computing & IT' });
                     }}
                     className="text-[10px] sm:text-[11px] text-emerald-300 underline hover:text-white pt-0.5 block mx-auto cursor-pointer"
                   >
@@ -1471,7 +1766,7 @@ export const HomePage: React.FC = () => {
                 </div>
               ) : (
                 <form onSubmit={handleQuickEnquirySubmit} className="space-y-1.5 sm:space-y-2">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5 sm:gap-2">
                     <div>
                       <label className="text-[9px] sm:text-[10px] font-semibold text-blue-200 block mb-0.5">
                         Full Name *
@@ -1488,14 +1783,30 @@ export const HomePage: React.FC = () => {
 
                     <div>
                       <label className="text-[9px] sm:text-[10px] font-semibold text-blue-200 block mb-0.5">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={quickEnquiry.email}
+                        onChange={e => setQuickEnquiry({ ...quickEnquiry, email: e.target.value })}
+                        placeholder="e.g. kasun@example.com"
+                        className="w-full px-2 py-1 sm:px-2.5 sm:py-1.5 bg-slate-900/80 border border-slate-700 rounded-md sm:rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="text-[9px] sm:text-[10px] font-semibold text-blue-200 block mb-0.5">
                         Phone / WhatsApp *
                       </label>
                       <input
                         type="tel"
+                        inputMode="numeric"
+                        pattern="[0-9+]*"
                         required
                         value={quickEnquiry.phone}
-                        onChange={e => setQuickEnquiry({ ...quickEnquiry, phone: e.target.value })}
-                        placeholder="e.g. +94 77 123 4567"
+                        onChange={e => setQuickEnquiry({ ...quickEnquiry, phone: e.target.value.replace(/[^0-9+]/g, '') })}
+                        placeholder="e.g. +94771234567"
                         className="w-full px-2 py-1 sm:px-2.5 sm:py-1.5 bg-slate-900/80 border border-slate-700 rounded-md sm:rounded-lg text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 transition-colors"
                       />
                     </div>
