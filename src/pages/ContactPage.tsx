@@ -39,10 +39,24 @@ export const ContactPage: React.FC = () => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contactEmail.trim())) {
+      showToast('Please enter a valid email address only (e.g. name@example.com)', 'warning');
+      return;
+    }
+
+    if (contactPhone.trim()) {
+      const digitsOnly = contactPhone.replace(/[^0-9]/g, '');
+      if (digitsOnly.length < 7 || !/^\+?[0-9]+$/.test(contactPhone.trim())) {
+        showToast('Phone / WhatsApp must contain numbers only (minimum 7 digits)', 'warning');
+        return;
+      }
+    }
+
     try {
       await submitLeadToGoogleSheets({
         name: contactName,
-        email: contactEmail,
+        email: contactEmail.trim(),
         phone: contactPhone.trim() || '+94 (Contact Desk)',
         interest: contactSubject,
         message: contactMessage
@@ -297,7 +311,7 @@ export const ContactPage: React.FC = () => {
         <div className="lg:col-span-7">
           {!isSent ? (
             <form onSubmit={handleSendMessage} className="bg-slate-800/90 p-4 sm:p-5 rounded-xl space-y-2.5 sm:space-y-3 text-xs border border-slate-700/80">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5">
                 <div>
                   <label className="text-[10px] sm:text-[11px] font-semibold text-slate-300 block mb-0.5">Your Name *</label>
                   <input
@@ -317,6 +331,18 @@ export const ContactPage: React.FC = () => {
                     value={contactEmail}
                     onChange={e => setContactEmail(e.target.value)}
                     placeholder="name@example.com"
+                    className="w-full px-2.5 py-1.5 sm:py-2 bg-slate-900 border border-slate-700 rounded-md sm:rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] sm:text-[11px] font-semibold text-slate-300 block mb-0.5">Phone / WhatsApp</label>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9+]*"
+                    value={contactPhone}
+                    onChange={e => setContactPhone(e.target.value.replace(/[^0-9+]/g, ''))}
+                    placeholder="e.g. +94771234567"
                     className="w-full px-2.5 py-1.5 sm:py-2 bg-slate-900 border border-slate-700 rounded-md sm:rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition-colors"
                   />
                 </div>
