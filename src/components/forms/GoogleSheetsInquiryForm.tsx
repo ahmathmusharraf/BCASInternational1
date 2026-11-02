@@ -81,15 +81,14 @@ export const GoogleSheetsInquiryForm: React.FC<GoogleSheetsInquiryFormProps> = (
       case 'email':
         if (!value.trim()) return 'Email address is required';
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
-          return 'Please enter a valid email address (e.g. name@example.com)';
+          return 'Please enter a valid email address only (e.g. name@example.com)';
         }
         return '';
       case 'phone':
         if (!value.trim()) return 'Phone / WhatsApp number is required';
-        // Allow +, digits, spaces, hyphens; min 7 digits
-        const digits = value.replace(/\D/g, '');
-        if (digits.length < 7) {
-          return 'Please enter a valid phone number (minimum 7 digits)';
+        const digits = value.replace(/[^0-9]/g, '');
+        if (digits.length < 7 || !/^\+?[0-9]+$/.test(value.trim())) {
+          return 'Phone / WhatsApp must contain numbers only (minimum 7 digits)';
         }
         return '';
       case 'interest':
@@ -106,9 +105,10 @@ export const GoogleSheetsInquiryForm: React.FC<GoogleSheetsInquiryFormProps> = (
   };
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    const sanitizedValue = field === 'phone' ? value.replace(/[^0-9+]/g, '') : value;
+    setFormData(prev => ({ ...prev, [field]: sanitizedValue }));
     if (touched[field]) {
-      const err = validateField(field, value);
+      const err = validateField(field, sanitizedValue);
       setErrors(prev => ({ ...prev, [field]: err }));
     }
   };
@@ -419,11 +419,13 @@ export const GoogleSheetsInquiryForm: React.FC<GoogleSheetsInquiryFormProps> = (
                   </div>
                   <input
                     type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9+]*"
                     required
                     value={formData.phone}
                     onChange={e => handleChange('phone', e.target.value)}
                     onBlur={() => handleBlur('phone')}
-                    placeholder="e.g. +94 77 123 4567"
+                    placeholder="e.g. +94771234567"
                     disabled={isSubmitting}
                     className={`w-full pl-9 pr-3 py-2 sm:py-2.5 text-xs sm:text-sm rounded-xl border bg-slate-50/50 text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-none transition-all ${
                       touched.phone && errors.phone
