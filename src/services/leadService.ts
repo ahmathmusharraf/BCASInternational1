@@ -46,7 +46,7 @@ const LAST_SUBMIT_TIME_KEY = 'bcas_last_submit_time';
 export function getLeadTrackingContext(): LeadTrackingContext {
   if (typeof window === 'undefined') {
     return {
-      pageUrl: 'https://bcas-international.lk',
+      pageUrl: 'https://bcasinternationalplacement.vercel.app/',
       utmSource: 'direct',
       utmMedium: 'organic',
       utmCampaign: 'admissions-portal',
@@ -402,8 +402,8 @@ var SHEET_ID = '';
 var SHEET_NAME = 'Leads';
 
 // Optional: Email address to receive instant lead alert notifications
-// Set to your email or leave empty ('') to disable email alerts
-var NOTIFICATION_EMAIL = 'mfahamedh@gmail.com';
+// Configured to send immediate alerts to: ahmathmusharraf@gmail.com
+var NOTIFICATION_EMAIL = 'ahmathmusharraf@gmail.com';
 
 /**
  * Handles incoming HTTP POST requests from the website
@@ -444,7 +444,7 @@ function doPost(e) {
     var phone = (data.phone || '+94 77 123 4567').trim();
     var interest = (data.interest || data.course || 'General Admissions').trim();
     var message = (data.message || 'General admissions inquiry').trim();
-    var pageUrl = (data.pageUrl || data.url || '').trim();
+    var pageUrl = (data.pageUrl || data.url || 'https://bcasinternationalplacement.vercel.app/').trim();
     var utmSource = (data.utmSource || data.utm_source || 'direct').trim();
     var utmMedium = (data.utmMedium || data.utm_medium || 'web-inquiry').trim();
     var utmCampaign = (data.utmCampaign || data.utm_campaign || 'general-admissions').trim();
@@ -484,12 +484,19 @@ function doPost(e) {
       try {
         var cleanPhoneDigits = phone.replace(/[^0-9]/g, '');
         var formattedDate = Utilities.formatDate(timestamp, Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss');
-        var subject = '🎓 New Student Lead: ' + name + ' (' + interest + ')';
+        var sourceHost = 'bcasinternationalplacement.vercel.app';
+        try {
+          if (pageUrl.indexOf('//') !== -1) {
+            sourceHost = pageUrl.split('/')[2];
+          }
+        } catch (hErr) {}
+
+        var subject = '🎓 New Student Lead: ' + name + ' (' + interest + ') - [' + sourceHost + ']';
         var htmlBody = 
           '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">' +
             '<div style="background-color: #00239C; color: #ffffff; padding: 20px 24px;">' +
               '<h2 style="margin: 0; font-size: 20px; font-weight: bold; letter-spacing: -0.5px;">BCAS International Placements</h2>' +
-              '<p style="margin: 6px 0 0; font-size: 13px; opacity: 0.9;">New Student Website Lead Captured</p>' +
+              '<p style="margin: 6px 0 0; font-size: 13px; opacity: 0.9;">Website Lead from <strong>' + sourceHost + '</strong></p>' +
             '</div>' +
             '<div style="padding: 24px; background-color: #ffffff;">' +
               '<table style="width: 100%; border-collapse: collapse; font-size: 14px;">' +
@@ -498,8 +505,9 @@ function doPost(e) {
                 '<tr><td style="padding: 10px 0; color: #64748b; border-bottom: 1px solid #f1f5f9;"><strong>Phone / WhatsApp:</strong></td><td style="padding: 10px 0; border-bottom: 1px solid #f1f5f9;"><span style="color: #0f172a; font-weight: bold;">' + phone + '</span></td></tr>' +
                 '<tr><td style="padding: 10px 0; color: #64748b; border-bottom: 1px solid #f1f5f9;"><strong>Program / Interest:</strong></td><td style="padding: 10px 0; color: #00239C; font-weight: bold; border-bottom: 1px solid #f1f5f9;">' + interest + '</td></tr>' +
                 '<tr><td style="padding: 10px 0; color: #64748b; border-bottom: 1px solid #f1f5f9; vertical-align: top;"><strong>Message:</strong></td><td style="padding: 10px 0; color: #334155; line-height: 1.5; border-bottom: 1px solid #f1f5f9;">' + (message || 'No additional message provided.') + '</td></tr>' +
+                '<tr><td style="padding: 10px 0; color: #64748b; border-bottom: 1px solid #f1f5f9;"><strong>Page URL:</strong></td><td style="padding: 10px 0; color: #00239C; font-size: 13px; border-bottom: 1px solid #f1f5f9;"><a href="' + pageUrl + '" target="_blank" style="color: #00239C; text-decoration: underline;">' + pageUrl + '</a></td></tr>' +
                 '<tr><td style="padding: 10px 0; color: #64748b; border-bottom: 1px solid #f1f5f9;"><strong>Source / Channel:</strong></td><td style="padding: 10px 0; color: #64748b; font-size: 13px; border-bottom: 1px solid #f1f5f9;">' + utmSource + ' (' + utmMedium + ')</td></tr>' +
-                '<tr><td style="padding: 10px 0; color: #64748b;"><strong>Received Time:</strong></td><td style="padding: 10px 0; color: #64748b; font-size: 13px;">' + formattedDate + '</td></tr>' +
+                '<tr><td style="padding: 10px 0; color: #64748b; border-bottom: 1px solid #f1f5f9;"><strong>Received Time:</strong></td><td style="padding: 10px 0; color: #64748b; font-size: 13px;">' + formattedDate + '</td></tr>' +
               '</table>' +
               '<div style="margin-top: 24px; padding-top: 20px; border-top: 2px solid #f1f5f9; text-align: center;">' +
                 (cleanPhoneDigits ? '<a href="https://wa.me/' + cleanPhoneDigits + '" style="display: inline-block; background-color: #10B981; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px; margin-right: 10px;">Chat on WhatsApp 💬</a>' : '') +
@@ -507,7 +515,7 @@ function doPost(e) {
               '</div>' +
             '</div>' +
             '<div style="background-color: #f8fafc; padding: 12px 24px; text-align: center; font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0;">' +
-              'Row #' + lastRow + ' in Google Sheet: ' + SHEET_NAME + ' · Lead Status: New' +
+              'Row #' + lastRow + ' in Google Sheet: ' + SHEET_NAME + ' · Lead Status: New · Notified: ' + NOTIFICATION_EMAIL +
             '</div>' +
           '</div>';
 
