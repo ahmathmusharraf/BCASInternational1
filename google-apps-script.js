@@ -2,7 +2,12 @@
  * ========================================================================
  * BCAS INTERNATIONAL EDUCATION & UNIVERSITY PLACEMENTS
  * Google Apps Script - Automated Lead Generation Webhook Backend (Code.gs)
- * Website: https://bcasinternational.lk
+ * 
+ * Supported Website URLs:
+ *  - Primary / Vercel: https://bcasinternationalplacement.vercel.app/
+ *  - Custom Domain:    https://bcasinternational.lk
+ * 
+ * Email Alerts Recipient: ahmathmusharraf@gmail.com
  * ========================================================================
  *
  * HOW TO USE THIS SCRIPT:
@@ -15,7 +20,7 @@
  * 7. Set "Execute as": "Me" (your Google account)
  * 8. CRITICAL: Set "Who has access": "Anyone" (allows website inquiry forms to submit)
  * 9. Click "Deploy", authorize permissions when prompted, and copy the Web App URL.
- * 10. Paste the Web App URL into the website's Google Sheets Setup modal or .env!
+ * 10. Paste the Web App URL into the website's Google Sheets Setup modal!
  *
  * TARGET GOOGLE SHEET COLUMNS:
  *  Col A: Timestamp
@@ -24,7 +29,7 @@
  *  Col D: Phone
  *  Col E: Interest (Country / Degree)
  *  Col F: Message
- *  Col G: Page URL (https://bcasinternational.lk)
+ *  Col G: Page URL (https://bcasinternationalplacement.vercel.app/ or https://bcasinternational.lk)
  *  Col H: UTM Source
  *  Col I: UTM Medium
  *  Col J: UTM Campaign
@@ -44,7 +49,6 @@ var SHEET_ID = '';
 var SHEET_NAME = 'Leads';
 
 // Email address to receive instant lead notification alerts
-// Configured to send immediate alerts to: ahmathmusharraf@gmail.com
 var NOTIFICATION_EMAIL = 'ahmathmusharraf@gmail.com';
 
 /**
@@ -86,7 +90,7 @@ function doPost(e) {
     var phone = (data.phone || '').trim();
     var interest = (data.interest || data.course || 'General Admissions').trim();
     var message = (data.message || '').trim();
-    var pageUrl = (data.pageUrl || data.url || 'https://bcasinternational.lk').trim();
+    var pageUrl = (data.pageUrl || data.url || 'https://bcasinternationalplacement.vercel.app/').trim();
     var utmSource = (data.utmSource || data.utm_source || 'direct').trim();
     var utmMedium = (data.utmMedium || data.utm_medium || 'web-inquiry').trim();
     var utmCampaign = (data.utmCampaign || data.utm_campaign || 'general-admissions').trim();
@@ -121,17 +125,24 @@ function doPost(e) {
     sheet.getRange(lastRow, 6).setWrap(true);
     sheet.getRange(lastRow, 11).setFontWeight('bold').setFontColor('#00239C');
 
-    // 6. Send instant email notification to counselor/admin (ahmathmusharraf@gmail.com)
+    // 6. Send instant email notification to ahmathmusharraf@gmail.com
     if (NOTIFICATION_EMAIL && NOTIFICATION_EMAIL.trim().length > 0 && NOTIFICATION_EMAIL.indexOf('@') !== -1) {
       try {
         var cleanPhoneDigits = phone.replace(/[^0-9]/g, '');
         var formattedDate = Utilities.formatDate(timestamp, Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss');
-        var subject = '🎓 New Student Lead: ' + name + ' (' + interest + ')';
+        var sourceHost = 'bcasinternationalplacement.vercel.app';
+        try {
+          if (pageUrl.indexOf('//') !== -1) {
+            sourceHost = pageUrl.split('/')[2];
+          }
+        } catch (hErr) {}
+
+        var subject = '🎓 New Student Lead: ' + name + ' (' + interest + ') - [' + sourceHost + ']';
         var htmlBody = 
           '<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">' +
             '<div style="background-color: #00239C; color: #ffffff; padding: 20px 24px;">' +
               '<h2 style="margin: 0; font-size: 20px; font-weight: bold; letter-spacing: -0.5px;">BCAS International Placements</h2>' +
-              '<p style="margin: 6px 0 0; font-size: 13px; opacity: 0.9;">Website Lead from bcasinternational.lk</p>' +
+              '<p style="margin: 6px 0 0; font-size: 13px; opacity: 0.9;">Website Lead from <strong>' + sourceHost + '</strong></p>' +
             '</div>' +
             '<div style="padding: 24px; background-color: #ffffff;">' +
               '<table style="width: 100%; border-collapse: collapse; font-size: 14px;">' +
@@ -194,7 +205,11 @@ function doGet(e) {
   if (action === 'ping') {
     return createJsonResponse({
       status: 'active',
-      service: 'BCAS International University Placements Lead Webhook (bcasinternational.lk)',
+      service: 'BCAS International University Placements Lead Webhook',
+      urls: [
+        'https://bcasinternationalplacement.vercel.app/',
+        'https://bcasinternational.lk'
+      ],
       timestamp: new Date().toISOString(),
       cors: true
     }, 200);
@@ -204,7 +219,10 @@ function doGet(e) {
     status: 'online',
     message: 'BCAS Google Apps Script Lead Webhook is active and listening for POST requests.',
     targetSheet: SHEET_NAME,
-    domain: 'bcasinternational.lk',
+    supportedDomains: [
+      'https://bcasinternationalplacement.vercel.app/',
+      'https://bcasinternational.lk'
+    ],
     notificationEmail: NOTIFICATION_EMAIL,
     instructions: 'Send HTTP POST requests with JSON payload to this URL.'
   }, 200);
@@ -276,7 +294,7 @@ function initializeHeaders(sheet) {
   sheet.setColumnWidth(4, 150); // Phone
   sheet.setColumnWidth(5, 190); // Interest
   sheet.setColumnWidth(6, 260); // Message
-  sheet.setColumnWidth(7, 200); // Page URL
+  sheet.setColumnWidth(7, 220); // Page URL
   sheet.setColumnWidth(8, 110); // UTM Source
   sheet.setColumnWidth(9, 110); // UTM Medium
   sheet.setColumnWidth(10, 130); // UTM Campaign
