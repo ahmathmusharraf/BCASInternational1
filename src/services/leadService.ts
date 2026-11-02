@@ -74,7 +74,7 @@ export function getLeadTrackingContext(): LeadTrackingContext {
  * Retrieves the currently configured Google Apps Script Web App URL
  */
 export function getScriptEndpoint(): string {
-  if (typeof window === 'undefined') return '';
+  if (typeof window === 'undefined') return DEFAULT_APPS_SCRIPT_URL;
   const stored = localStorage.getItem(STORAGE_ENDPOINT_KEY);
   if (stored && stored.trim().length > 0) return stored.trim();
   
@@ -84,7 +84,7 @@ export function getScriptEndpoint(): string {
     return envUrl.trim();
   }
   
-  return '';
+  return DEFAULT_APPS_SCRIPT_URL;
 }
 
 /**
@@ -675,12 +675,12 @@ export const GOOGLE_SHEET_HEADERS = [
 
 import { StoredLeadRecord } from '../types';
 
-export const DEFAULT_APPS_SCRIPT_URL = '';
+export const DEFAULT_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwp7gjiLG2IJ5-evSnKcxs5iPctQBFlNS_e_xqptUAynPdmAD-7OlejL_6vP3qJdBPJYQ/exec';
 export const GOOGLE_APPS_SCRIPT_CODE = GOOGLE_APPS_SCRIPT_TEMPLATE;
 
 export const getAppsScriptUrl = getScriptEndpoint;
 export const setAppsScriptUrl = setScriptEndpoint;
-export const resetAppsScriptUrl = () => setScriptEndpoint('');
+export const resetAppsScriptUrl = () => setScriptEndpoint(DEFAULT_APPS_SCRIPT_URL);
 export const testAppsScriptConnection = pingGoogleAppsScript;
 export const getLocalLeadsLog = getRecordedLeads;
 export const clearLocalLeadsLog = clearRecordedLeads;
