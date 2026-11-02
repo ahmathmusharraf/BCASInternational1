@@ -73,11 +73,12 @@ export const ApplyPage: React.FC = () => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
-      newErrors.email = 'Please provide a valid email address (e.g. name@example.com)';
+      newErrors.email = 'Please provide a valid email address only (e.g. name@example.com)';
     }
 
-    if (!formData.phone.trim() || formData.phone.trim().length < 8) {
-      newErrors.phone = 'Please provide an active contact phone number';
+    const digitsOnly = formData.phone.replace(/[^0-9]/g, '');
+    if (!formData.phone.trim() || digitsOnly.length < 7 || !/^\+?[0-9]+$/.test(formData.phone.trim())) {
+      newErrors.phone = 'Phone / WhatsApp must contain numbers only (minimum 7 digits)';
     }
 
     if (!formData.demoConsent) {
@@ -276,13 +277,16 @@ export const ApplyPage: React.FC = () => {
                 <input
                   id="phone"
                   type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9+]*"
                   required
                   value={formData.phone}
                   onChange={e => {
-                    setFormData({ ...formData, phone: e.target.value });
+                    const cleaned = e.target.value.replace(/[^0-9+]/g, '');
+                    setFormData({ ...formData, phone: cleaned });
                     if (errors.phone) setErrors({ ...errors, phone: undefined });
                   }}
-                  placeholder="e.g. +94 77 123 4567"
+                  placeholder="e.g. +94771234567"
                   className={`w-full px-2.5 py-1.5 sm:py-2 bg-slate-50 border rounded-md sm:rounded-lg text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#00239C] transition-all duration-150 ${
                     errors.phone ? 'border-red-500' : 'border-slate-200'
                   }`}
