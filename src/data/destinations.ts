@@ -44,13 +44,13 @@ export const DESTINATIONS: Destination[] = [
     name: 'United Kingdom',
     code: 'UK',
     flag: '🇬🇧',
-    tagline: 'World-renowned degrees, 1-year Master’s & 2-year Graduate Route visa',
+    tagline: 'World-renowned degrees, 1-year Master’s & Graduate Route visa',
     heroImage: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=1200&q=80',
-    overview: 'The UK continues to be a premier choice for Sri Lankan students. Offering internationally accredited qualifications, accelerated 3-year bachelor’s and 1-year master’s programmes, and the Graduate Route visa allowing up to 2 years of post-study work.',
+    overview: 'The UK continues to be a premier choice for Sri Lankan students. Offering internationally accredited qualifications, accelerated 3-year bachelor’s and 1-year master’s programmes, and the Graduate Route visa allowing post-study work.',
     avgTuitionPerYear: '£12,000 – £22,000',
     avgLivingPerYear: '£9,207 (outside London) / £12,006 (inside London)',
     workDuringStudy: 'Up to 20 hours/week during term time, full-time in holidays',
-    postStudyWorkVisa: 'Graduate Route: 2 years (3 years for PhD graduates)',
+    postStudyWorkVisa: 'Graduate Route: 18 months (3 years for PhD graduates)',
     primaryIntakes: 'September/October (Major) and January/February (Secondary)',
     currency: 'GBP (£)',
     officialImmigrationName: 'GOV.UK Student Visa Guidance',
@@ -58,7 +58,7 @@ export const DESTINATIONS: Destination[] = [
     popularCities: ['London', 'Birmingham', 'Manchester', 'Coventry', 'Leeds', 'Edinburgh'],
     topReasons: [
       'Fast-track completion: 1-Year Master’s save substantial living and tuition costs',
-      'Graduate Route allows 2 full years of post-graduation employment in the UK',
+      'Graduate Route allows 18 months of post-graduation employment in the UK (3 years for PhD graduates)',
       'Direct pathway and credit exemptions from BCAS diplomas and HND qualifications',
       'Multicultural student cities with strong Sri Lankan student communities'
     ]
