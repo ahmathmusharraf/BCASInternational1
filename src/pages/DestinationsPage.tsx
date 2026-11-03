@@ -109,16 +109,16 @@ export const DestinationsPage: React.FC = () => {
       return ['canada'].includes(dest.id);
     }
     if (filterPreference === 'asia-me') {
-      return ['uae'].includes(dest.id);
+      return ['uae', 'malaysia'].includes(dest.id);
     }
-    if (filterPreference === 'australia') {
-      return ['australia'].includes(dest.id);
+    if (filterPreference === 'australasia') {
+      return ['australia', 'new-zealand'].includes(dest.id);
     }
     if (filterPreference === 'post-study') {
-      return ['uk', 'australia', 'canada', 'sweden', 'finland'].includes(dest.id);
+      return ['uk', 'australia', 'canada', 'sweden', 'finland', 'new-zealand'].includes(dest.id);
     }
     if (filterPreference === 'budget') {
-      return ['malta', 'sweden', 'finland', 'uae'].includes(dest.id);
+      return ['malta', 'sweden', 'finland', 'uae', 'malaysia'].includes(dest.id);
     }
     return true;
   });
@@ -467,7 +467,7 @@ export const DestinationsPage: React.FC = () => {
           <div className="space-y-2 sm:space-y-4 max-w-3xl">
             <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-semibold text-[#00239C] uppercase tracking-wider">
               <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#00239C]" />
-              <span>7 FOCUS STUDY DESTINATIONS & GLOBAL REACH</span>
+              <span>9 FOCUS STUDY DESTINATIONS & GLOBAL REACH</span>
             </div>
             <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold font-display text-slate-900 tracking-tight">
               Study Abroad Destinations
@@ -515,11 +515,11 @@ export const DestinationsPage: React.FC = () => {
 
               <div className="flex items-center gap-1.5 overflow-x-auto text-xs py-1">
                 {[
-                  { id: 'all', label: 'All 7 Destinations' },
-                  { id: 'europe', label: 'UK & Europe' },
-                  { id: 'australia', label: 'Australia' },
+                  { id: 'all', label: 'All 9 Destinations' },
+                  { id: 'europe', label: 'UK & Europe (4)' },
+                  { id: 'australasia', label: 'Australia & NZ (2)' },
                   { id: 'north-america', label: 'Canada' },
-                  { id: 'asia-me', label: 'UAE / Dubai' },
+                  { id: 'asia-me', label: 'UAE & Malaysia (2)' },
                   { id: 'post-study', label: 'Post-Study Visas' }
                 ].map(f => (
                   <button
