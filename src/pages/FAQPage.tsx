@@ -120,7 +120,7 @@ export const FAQPage: React.FC = () => {
       category: 'Visa & Immigration',
       question: 'What are the Post-Study Work Visa (PSWV) rights after graduation?',
       answer:
-        'International graduates can remain and work in their destination country through dedicated post-study visas: UK Graduate Route provides 2 years (3 years for PhD); Australia offers 2 to 4 years (with regional bonuses); New Zealand provides up to 3 years; Canada grants PGWP up to 3 years; and Finland/Sweden offer 1 to 2 years post-study residence permits to seek skilled employment.',
+        'International graduates can remain and work in their destination country through dedicated post-study visas: UK Graduate Route provides 18 months (3 years for PhD); Australia offers 2 to 4 years (with regional bonuses); New Zealand provides up to 3 years; Canada grants PGWP up to 3 years; and Finland/Sweden offer 1 to 2 years post-study residence permits to seek skilled employment.',
       keyPoints: [
         'No employer sponsorship required to apply for initial Graduate / Post-Study visas',
         'Unrestricted employment in any field or sector during the post-study period',
