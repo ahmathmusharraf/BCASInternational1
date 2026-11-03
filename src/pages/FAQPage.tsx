@@ -142,13 +142,13 @@ export const FAQPage: React.FC = () => {
     {
       id: 'intakes-timelines',
       category: 'Admissions & Eligibility',
-      question: 'When are the primary intakes and when should I start applying?',
+      question: 'When are the primary intakes and when should I start applications?',
       answer:
-        'The main academic intakes are September/October (Autumn intake) and January/February (Spring intake), with additional May/July intakes in Australia, New Zealand, and Malaysia. We strongly recommend starting your consultation 6 to 9 months before your desired intake to allow ample time for document preparation, English testing, offer issuance, and visa processing.',
+        'The main university academic intakes and application start schedules are:\n\n• Autumn intake: Jan – Mar (Start applications: August – September start)\n• Spring intake: Jul – Sep (Start applications: January – February start)\n\nWe recommend initiating your application during the designated start window (approx. 5 to 6 months prior to your target intake). This ensures ample time for academic assessment, offer issuance, scholarship matching, and visa grant processing.',
       keyPoints: [
-        'Autumn Intake: Apply between November and May for best scholarship opportunities',
-        'Spring Intake: Apply between June and October',
-        'BCAS processes rolling admissions throughout the entire calendar year'
+        'Autumn intake: Jan – Mar (Start applications: August – September start)',
+        'Spring intake: Jul – Sep (Start applications: January – February start)',
+        'BCAS processes rolling admissions and direct-track offers throughout the year'
       ]
     },
     {
