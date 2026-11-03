@@ -937,17 +937,15 @@ export const HomePage: React.FC = () => {
           </p>
         </div>
 
-        {/* Interactive Destination Filter Pills */}
+        {/* Interactive Destination Filter Pills - All 9 Destinations */}
         <div className="flex items-center justify-start md:justify-center gap-1.5 overflow-x-auto pb-2 mb-3 sm:pb-3 sm:mb-6 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0">
           {[
-            { id: 'All', label: 'All Destinations', flag: '🌐' },
-            { id: 'United Kingdom', label: 'United Kingdom', flag: '🇬🇧' },
-            { id: 'Australia', label: 'Australia', flag: '🇦🇺' },
-            { id: 'Canada', label: 'Canada', flag: '🇨🇦' },
-            { id: 'Sweden', label: 'Sweden', flag: '🇸🇪' },
-            { id: 'Finland', label: 'Finland', flag: '🇫🇮' },
-            { id: 'Malta', label: 'Malta', flag: '🇲🇹' },
-            { id: 'United Arab Emirates', label: 'UAE', flag: '🇦🇪' }
+            { id: 'All', label: 'All Destinations (9)', flag: '🌐' },
+            ...DESTINATIONS.map(d => ({
+              id: d.name,
+              label: d.id === 'uae' ? 'UAE' : d.name,
+              flag: d.flag
+            }))
           ].map(tab => (
             <button
               key={tab.id}
@@ -1197,7 +1195,7 @@ export const HomePage: React.FC = () => {
           /* Creative Destination Cards Grid / Carousel (When "All" is active) */
           <div
             ref={destinationsRef}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-4 pb-3 sm:pb-4 -mx-4 px-4 scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-4 md:mx-0 md:px-0 md:overflow-visible"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-4 pb-3 sm:pb-4 -mx-4 px-4 scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-3 md:mx-0 md:px-0 md:overflow-visible"
           >
             {DESTINATIONS.map(dest => (
               <div
