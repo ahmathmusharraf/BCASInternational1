@@ -41,7 +41,7 @@ export const ApplyPage: React.FC = () => {
     targetSubject: prefilledEnquiry.subject || 'Computing & IT',
     targetDestination: prefilledEnquiry.destination || 'United Kingdom',
     targetLevel: prefilledEnquiry.level || 'Bachelor’s',
-    targetIntake: 'September / October 2027',
+    targetIntake: prefilledEnquiry.intake || 'Autumn Intake (Jan – Mar)',
     budgetStatus: 'Need scholarship & funding guidance',
     englishProficiency: 'Planning to sit IELTS / PTE',
     specificQuestions: '',
@@ -54,12 +54,13 @@ export const ApplyPage: React.FC = () => {
 
   // Sync prefilled data if updated
   useEffect(() => {
-    if (prefilledEnquiry.subject || prefilledEnquiry.destination || prefilledEnquiry.level) {
+    if (prefilledEnquiry.subject || prefilledEnquiry.destination || prefilledEnquiry.level || prefilledEnquiry.intake) {
       setFormData(prev => ({
         ...prev,
         targetSubject: prefilledEnquiry.subject || prev.targetSubject,
         targetDestination: prefilledEnquiry.destination || prev.targetDestination,
-        targetLevel: prefilledEnquiry.level || prev.targetLevel
+        targetLevel: prefilledEnquiry.level || prev.targetLevel,
+        targetIntake: prefilledEnquiry.intake || prev.targetIntake
       }));
     }
   }, [prefilledEnquiry]);
@@ -383,6 +384,29 @@ export const ApplyPage: React.FC = () => {
                   <option value="Diploma / HND">Diploma / Pearson BTEC HND</option>
                   <option value="Bachelor’s">Bachelor’s Degree</option>
                   <option value="Postgraduate">Master’s / Postgraduate</option>
+                </select>
+              </div>
+
+              {/* Target Intake Window */}
+              <div className="sm:col-span-3">
+                <label htmlFor="intake" className="text-[10px] sm:text-[11px] font-semibold text-slate-700 block mb-0.5">
+                  Target Intake & Application Window
+                </label>
+                <select
+                  id="intake"
+                  value={formData.targetIntake}
+                  onChange={e => setFormData({ ...formData, targetIntake: e.target.value })}
+                  className="w-full px-2.5 py-1.5 sm:py-2 bg-slate-50 border border-slate-200 rounded-md sm:rounded-lg text-xs text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#00239C] transition-all duration-150"
+                >
+                  <option value="Autumn Intake (Jan – Mar)">
+                    🍁 Autumn intake: Jan – Mar (Start applications: August – September start)
+                  </option>
+                  <option value="Spring Intake (Jul – Sep)">
+                    🌱 Spring intake: Jul – Sep (Start applications: January – February start)
+                  </option>
+                  <option value="Next Immediate Intake">
+                    ⚡ Next Immediate Available Intake
+                  </option>
                 </select>
               </div>
             </div>
