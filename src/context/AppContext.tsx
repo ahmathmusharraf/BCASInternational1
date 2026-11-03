@@ -26,12 +26,14 @@ interface AppContextType {
     destination?: string;
     level?: string;
     university?: string;
+    intake?: string;
   };
   setPrefilledEnquiry: React.Dispatch<React.SetStateAction<{
     subject?: string;
     destination?: string;
     level?: string;
     university?: string;
+    intake?: string;
   }>>;
   submittedApplications: SubmittedApplication[];
   addSubmittedApplication: (app: SubmittedApplication) => void;
@@ -98,6 +100,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     destination?: string;
     level?: string;
     university?: string;
+    intake?: string;
   }>({});
 
   const [submittedApplications, setSubmittedApplications] = useState<SubmittedApplication[]>(() => {
