@@ -62,6 +62,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 
 const VALID_PAGES: PageId[] = [
   'home',
+  'about',
   'destinations',
   'universities',
   'courses',
@@ -77,7 +78,8 @@ const VALID_PAGES: PageId[] = [
   'privacy',
   'terms',
   'cookie-policy',
-  'cookie-preferences'
+  'cookie-preferences',
+  'faq'
 ];
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
