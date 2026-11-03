@@ -60,7 +60,7 @@ const MainContent: React.FC = () => {
       case 'events':
         return <EventGalleryPage />;
       case 'portal':
-        return <HomePage />;
+        return <StudentPortalPage />;
       case 'contact':
         return <ContactPage />;
       case 'privacy':
