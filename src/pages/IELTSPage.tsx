@@ -74,7 +74,7 @@ export const IELTSPage: React.FC = () => {
                   ★ ENGLISH FOR INTERNATIONAL OPPORTUNITY
                 </span>
                 <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-blue-100 text-xs font-semibold border border-white/20">
-                  British Council &amp; IDP Coaching Center
+                  British Council Coaching Center - Partnership
                 </span>
               </div>
 
@@ -86,7 +86,7 @@ export const IELTSPage: React.FC = () => {
               </h1>
 
               <p className="text-sm sm:text-base text-blue-100 max-w-2xl leading-relaxed">
-                Achieve your dream university admissions and student visa in the UK, Australia, Canada, Europe, or New Zealand. With <strong>expert trainers</strong>, comprehensive <strong>mock exams</strong>, flexible <strong>online &amp; hybrid mode</strong>, and <strong>guaranteed results</strong>, BCAS gets you to your targeted Band 6.5, 7.0, or 7.5+ on your first attempt.
+                We are a <strong>British Council Coaching Center - Partnership</strong> preparing you for university admissions and student visas in the UK, Australia, Canada, Europe, or New Zealand. With <strong>Qualified IELTS Trainers</strong>, comprehensive <strong>mock exams</strong>, flexible <strong>online &amp; hybrid mode</strong>, and <strong>target Band assurance that depends on each student&apos;s capacity</strong>, BCAS helps you achieve your required IELTS Band score.
               </p>
 
               {/* 4 Feature Badges from user request */}
@@ -102,17 +102,17 @@ export const IELTSPage: React.FC = () => {
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/15">
                   <div className="flex items-center gap-1.5 text-emerald-300 text-xs font-bold">
                     <GraduationCap className="w-4 h-4 shrink-0" />
-                    <span>EXPERT TRAINERS</span>
+                    <span>QUALIFIED IELTS TRAINERS</span>
                   </div>
-                  <div className="text-[11px] text-blue-100 mt-1">Certified examiner coaches</div>
+                  <div className="text-[11px] text-blue-100 mt-1">British Council Coaching Center - Partnership</div>
                 </div>
 
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/15">
                   <div className="flex items-center gap-1.5 text-blue-200 text-xs font-bold">
                     <Target className="w-4 h-4 shrink-0" />
-                    <span>GUARANTEED RESULTS</span>
+                    <span>TARGET BAND ASSURANCE</span>
                   </div>
-                  <div className="text-[11px] text-blue-100 mt-1">Target Band 7.0+ assurance</div>
+                  <div className="text-[11px] text-blue-100 mt-1">Depends on student&apos;s capacity target Band assurance</div>
                 </div>
 
                 <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/15">
@@ -267,7 +267,7 @@ export const IELTSPage: React.FC = () => {
                 IELTS Preparation Classes
               </h3>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Comprehensive training covering all 4 modules. Certified British Council and IDP certified master trainers provide real-time rubric correction and vocabulary development.
+                Comprehensive training covering all 4 modules under our British Council Coaching Center - Partnership. Qualified IELTS Trainers provide real-time rubric correction, vocabulary development, and target Band assurance depending on each student&apos;s capacity.
               </p>
             </div>
             <div className="pt-3 mt-3 border-t border-slate-100 flex items-center gap-1 text-[11px] font-semibold text-[#00239C]">
@@ -378,7 +378,7 @@ export const IELTSPage: React.FC = () => {
                 <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 space-y-1">
                   <h4 className="text-xs font-bold text-blue-200">Official Exam Booking</h4>
                   <p className="text-[11px] text-blue-100 leading-relaxed">
-                    Direct date reservations with British Council Sri Lanka &amp; IDP with zero booking fees and free exam day orientation.
+                    Direct date reservations through our British Council Coaching Center - Partnership with zero booking fees and free exam day orientation.
                   </p>
                 </div>
               </div>
@@ -391,7 +391,7 @@ export const IELTSPage: React.FC = () => {
                   Book Free Visa &amp; IELTS Consultation
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Speak directly with an accredited British Council / IDP IELTS Counselor
+                  Speak directly with our Qualified IELTS Trainers &amp; British Council Coaching Center Partnership team
                 </p>
               </div>
 
@@ -437,7 +437,7 @@ export const IELTSPage: React.FC = () => {
       <section className="bg-slate-900 text-white py-12 md:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-600/30 text-red-300 border border-red-500/30 text-xs font-bold uppercase tracking-wider">
-            <span>OFFICIAL BRITISH COUNCIL &amp; IDP SUPPORT</span>
+            <span>BRITISH COUNCIL COACHING CENTER - PARTNERSHIP</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display">
@@ -445,7 +445,7 @@ export const IELTSPage: React.FC = () => {
           </h2>
 
           <p className="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed">
-            Join hundreds of BCAS students who cleared their language threshold and obtained their visas on the very first try.
+            Train with Qualified IELTS Trainers under our British Council Coaching Center - Partnership, with target Band assurance depending on each student&apos;s capacity.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
