@@ -238,7 +238,7 @@ export const SUCCESS_STORIES: SuccessStory[] = [
     degreeProgramme: 'Bachelor of Civil & Structural Engineering',
     graduationYear: '2025 Graduate',
     currentRole: 'Graduate Site Engineer, New South Wales',
-    storyQuote: 'Studying in a designated regional university city gave me world-class engineering education and an additional year of post-study work rights.',
+    storyQuote: 'Studying at an Australian university gave me world-class engineering education and a 3-year post-study work visa to kick-start my career.',
     fullJourney: 'Karthik started with the BCAS Foundation in Science and Technology in Jaffna, then applied through BCAS to UOW Australia. BCAS managed his GTE (Genuine Student) statement review and financial documentation with precision.',
     adviceForStudents: 'Look closely at regional universities in Australia. The campus community is tight-knit, living costs are lower, and post-study opportunities are tremendous.',
     category: 'Engineering & Construction',
@@ -371,7 +371,7 @@ export const BLOG_POSTS: BlogPost[] = [
         heading: '01. Start with Your Personal Goals, Not Just the Country',
         paragraphs: [
           'It is common for students to pick a country because a friend or family member lives there. While community matters, your chosen programme should first align with your academic aptitude, career aspirations, and long-term residency goals.',
-          'Ask yourself: What field genuinely engages me? Do I want an accelerated 1-year master’s (like in the UK) or a programme with 48 hours per fortnight working flexibility and 2 to 4 years post-study rights (like Australia)?'
+          'Ask yourself: What field genuinely engages me? Do I want an accelerated 1-year master’s (like in the UK) or a programme with 48 hours per fortnight working flexibility and a 3-year post-study work visa (like Australia)?'
         ],
         bulletPoints: [
           'List 2 or 3 career roles you would love to step into after graduating.',
