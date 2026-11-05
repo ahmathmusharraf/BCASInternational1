@@ -41,7 +41,7 @@ export const COURSE_INTEREST_OPTIONS = [
   'Law & International Legal Studies (LLB)',
   'Hospitality, Tourism & Event Management',
   'Ontario Secondary School Diploma (OSSD) - Canadian High School',
-  'IELTS Academic Preparation & Testing Desk',
+  'IELTS Preparation (British Council Coaching Center - Partnership)',
   'University Transfer & Top-up Degree',
   'Scholarship & Financial Aid Guidance',
   'General International Admissions Counseling'
