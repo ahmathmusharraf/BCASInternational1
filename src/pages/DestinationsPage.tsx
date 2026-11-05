@@ -599,12 +599,12 @@ export const DestinationsPage: React.FC = () => {
                           </div>
                         </div>
 
-                        {/* Top Reasons Checklist */}
+                        {/* Key Advantages Checklist */}
                         <div className="space-y-1.5 pt-1">
                           <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
-                            Why Sri Lankan Students Choose {dest.name}:
+                            Key Advantages for Sri Lankan Students:
                           </span>
-                          {dest.topReasons.slice(0, 2).map((reason, idx) => (
+                          {dest.topReasons.slice(0, 3).map((reason, idx) => (
                             <div key={idx} className="flex items-start gap-2 text-xs text-slate-700">
                               <CheckCircle2 className="w-3.5 h-3.5 text-[#00239C] shrink-0 mt-0.5" />
                               <span className="line-clamp-1">{reason}</span>
