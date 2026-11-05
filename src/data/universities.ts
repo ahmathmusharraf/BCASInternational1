@@ -1555,7 +1555,7 @@ export const UNIVERSITIES: University[] = [
     highlights: [
       'Ranked #1 in Australia for overall international student support',
       'Southern Cross Model: Focus on 1–2 subjects per 6-week block with higher pass rates',
-      'Maximum regional migration incentives: up to 3 to 4 years post-study work visa',
+      'Eligible for 3 years Post-Study Work Visa upon graduation',
       'Vice Chancellor’s Academic Excellence Scholarships up to AUD $8,000/yr'
     ],
     scholarshipAvailable: true,
