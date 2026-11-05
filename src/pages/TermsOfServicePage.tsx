@@ -112,7 +112,7 @@ export const TermsOfServicePage: React.FC = () => {
             <li>Direct entry, foundation, and top-up bachelor’s/master’s degree shortlisting at accredited universities.</li>
             <li>Priority application submission, document attestation, and university offer letter procurement.</li>
             <li>Scholarship and South Asian regional tuition bursary identification and filing.</li>
-            <li>Official language readiness coaching via the BCAS IELTS Academy (British Council & IDP standards).</li>
+            <li>Official language readiness coaching via our British Council Coaching Center - Partnership with Qualified IELTS Trainers (target Band assurance depending on each student&apos;s capacity).</li>
             <li>Canadian high school qualification facilitation via the <strong>Ontario Secondary School Diploma (OSSD)</strong> in direct partnership with Cambridge International Academy.</li>
             <li>Genuine Student (GS), Confirmation of Acceptance for Studies (CAS), and Confirmation of Enrolment (CoE) compliance audits.</li>
           </ul>
