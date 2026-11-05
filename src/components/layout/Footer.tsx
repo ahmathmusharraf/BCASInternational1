@@ -110,7 +110,7 @@ export const Footer: React.FC = () => {
                   onClick={() => navigateTo('ielts')}
                   className="text-emerald-300 hover:text-white transition-colors cursor-pointer text-left font-semibold flex items-center gap-1.5"
                 >
-                  <span>Study IELTS (British Council/IDP)</span>
+                  <span>Study IELTS (British Council Partnership)</span>
                   <span className="text-xs">🎯</span>
                 </button>
               </li>
@@ -240,7 +240,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Disclaimers and Copyright */}
-        <div className="pt-5 sm:pt-8 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-slate-300">
+        <div className="pt-5 sm:pt-8 flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-slate-300 bcas-footer-legal">
           <div className="text-center md:text-left space-y-1">
             <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
               <p>© {currentYear} BCAS International University Placements. All rights reserved.</p>
