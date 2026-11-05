@@ -69,7 +69,7 @@ export const Header: React.FC = () => {
   const secondaryNavItems: { id: PageId; label: string; desc: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'about', label: 'About BCAS Placement', desc: 'Part of BCAS Campus (British College of Applied Studies)', icon: Building2 },
     { id: 'ossd', label: 'Canadian OSSD', desc: 'Direct university entry after O/Levels via CIA', icon: Award },
-    { id: 'ielts', label: 'Study IELTS', desc: 'Online & hybrid classes, mock exams & band 7+ prep', icon: Sparkles },
+    { id: 'ielts', label: 'Study IELTS', desc: 'British Council Coaching Center Partnership & Qualified IELTS Trainers', icon: Sparkles },
     { id: 'events', label: 'Event Gallery', desc: 'University fairs, seminars & visa sessions', icon: Camera },
     { id: 'stories', label: 'Student Stories', desc: 'Real pathways and alumni milestones', icon: Sparkles },
     { id: 'faq', label: 'Frequent Questions', desc: 'Admissions, visas, scholarships & requirements', icon: HelpCircle },
@@ -148,10 +148,10 @@ export const Header: React.FC = () => {
           </button>
         </div>
 
-        {/* Zone 2: Navigation Links (Desktop only) */}
+        {/* Zone 2: Navigation Links (Desktop only - Compact font size) */}
         <nav
           aria-label="Main navigation"
-          className="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600"
+          className="hidden lg:flex items-center gap-5 xl:gap-7 text-xs lg:text-[13px] xl:text-[13.5px] font-medium text-slate-600"
         >
           {primaryNavItems.map(item => {
             const isActive = currentPage === item.id;
@@ -260,7 +260,7 @@ export const Header: React.FC = () => {
           {/* Primary CTA */}
           <button
             onClick={() => handleNavClick('apply')}
-            className="px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white bg-[#00239C] hover:bg-[#001869] active:scale-98 rounded-lg shadow-xs hover:shadow-md transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 shrink-0"
+            className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs font-semibold text-white bg-[#00239C] hover:bg-[#001869] active:scale-98 rounded-lg shadow-xs hover:shadow-md transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 shrink-0"
           >
             <span>Apply Online</span>
             <span aria-hidden="true">↗</span>
