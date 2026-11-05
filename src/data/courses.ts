@@ -71,19 +71,19 @@ export const COURSES: Course[] = [
     level: 'Foundation',
     duration: '6 - 8 Weeks (Regular & Fast-Track Intensive Batches)',
     popularDestinations: ['United Kingdom', 'Australia', 'Canada', 'Sweden', 'Finland', 'Malta', 'United Arab Emirates'],
-    overview: 'Master the IELTS Academic exam with BCAS certified language instructors. Comprehensive training across Listening, Reading, Writing, and Speaking with timed mock examinations, individual diagnostic rubrics, official British Council / IDP test registration support, and Band 7.0+ score guarantees for student visa requirements.',
+    overview: 'We are a British Council Coaching Center - Partnership with Qualified IELTS Trainers. Comprehensive training across Listening, Reading, Writing, and Speaking with timed mock examinations, individual diagnostic rubrics, and target Band assurance that depends on each student’s capacity.',
     keyModules: [
       'Academic Writing Task 1 (Data Synthesis, Charts, Diagrams & Process Maps)',
       'Academic Writing Task 2 (Discursive Essays, Balanced Arguments & Stances)',
       'Advanced Academic Reading Tactics (Skimming, Scanning & Speed Inference)',
-      'Interactive Accent & Fluency Speaking Drills with Native Examiner Rubrics',
+      'Interactive Accent & Fluency Speaking Drills with Qualified IELTS Trainers',
       'Listening Comprehension Across All 4 Real Exam Formats',
       'Weekly Full-Length Timed Computer-Delivered & Paper Mock Tests'
     ],
     careerOpportunities: [
       'Fulfill UKVI / Australian / Canadian Student Visa Language Standards',
       'Secure Unconditional University Admission Offers Without Pre-Sessional Fees',
-      'Attain Band 7.0+ to Unlock Merit & International Excellence Scholarships',
+      'Target Band Assurance Depending on Each Student’s Capacity & Visa Thresholds',
       'Direct Exemption from Foundation English Requirements'
     ],
     entryRequirements: 'Open to all students preparing for overseas study or professional migration. Free initial placement assessment test provided on registration.',
