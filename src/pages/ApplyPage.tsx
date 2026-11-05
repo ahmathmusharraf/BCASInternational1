@@ -364,6 +364,8 @@ export const ApplyPage: React.FC = () => {
                   <option value="Finland">Finland 🇫🇮</option>
                   <option value="Malta">Malta 🇲🇹</option>
                   <option value="United Arab Emirates">United Arab Emirates 🇦🇪</option>
+                  <option value="New Zealand">New Zealand 🇳🇿</option>
+                  <option value="Malaysia">Malaysia 🇲🇾</option>
                   <option value="Other / And Many More Destinations">Other Destinations 🌐</option>
                   <option value="Open to options">Open to options 🧭</option>
                 </select>
