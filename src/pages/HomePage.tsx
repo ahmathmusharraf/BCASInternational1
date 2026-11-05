@@ -344,7 +344,7 @@ export const HomePage: React.FC = () => {
               </div>
               <div className="flex items-center gap-1 sm:gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
-                <span className="font-medium text-white">British Council Certified</span>
+                <span className="font-medium text-white">British Council Coaching Center - Partnership</span>
               </div>
               <div className="flex items-center gap-1 sm:gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
@@ -1237,14 +1237,20 @@ export const HomePage: React.FC = () => {
                     <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-1.5 sm:pt-2 border-t border-slate-100 text-[10px] sm:text-[11px]">
                       <div className="p-1.5 sm:p-2 bg-slate-50 rounded-lg sm:rounded-xl">
                         <span className="text-slate-400 block text-[8px] sm:text-[9px] uppercase font-bold">Avg. Tuition</span>
-                        <span className="font-bold text-slate-900 font-mono text-[10px] sm:text-[11px] truncate block">
-                          {dest.avgTuitionPerYear.split('–')[0]}
+                        <span
+                          className="font-bold text-slate-900 font-mono text-[10px] sm:text-[11px] truncate block"
+                          title={dest.avgTuitionPerYear}
+                        >
+                          {dest.avgTuitionPerYear}
                         </span>
                       </div>
                       <div className="p-1.5 sm:p-2 bg-slate-50 rounded-lg sm:rounded-xl">
-                        <span className="text-slate-400 block text-[8px] sm:text-[9px] uppercase font-bold">Part-Time Work</span>
-                        <span className="font-bold text-slate-900 text-[10px] sm:text-[11px] truncate block">
-                          20 hrs / week
+                        <span className="text-slate-400 block text-[8px] sm:text-[9px] uppercase font-bold">Work Rights</span>
+                        <span
+                          className="font-bold text-slate-900 text-[10px] sm:text-[11px] truncate block"
+                          title={dest.workDuringStudy}
+                        >
+                          {dest.workDuringStudy}
                         </span>
                       </div>
                     </div>
@@ -1304,7 +1310,7 @@ export const HomePage: React.FC = () => {
 
         {/* Mobile Swipe Cue Dots */}
         <div className="flex md:hidden items-center justify-center gap-1.5 pt-1.5 text-slate-400 text-[11px]">
-          <span>Swipe horizontally to view all 8 destinations</span>
+          <span>Swipe horizontally to view all {DESTINATIONS.length} destinations</span>
           <span className="text-[#00239C] font-bold">➔</span>
         </div>
       </section>
@@ -1385,39 +1391,35 @@ export const HomePage: React.FC = () => {
                   <span>WE DO IELTS ALSO</span>
                 </span>
                 <span className="px-2 py-0.2 sm:py-0.5 rounded-full bg-blue-50 text-[#00239C] text-[9px] sm:text-[10px] font-semibold">
-                  Official British Council & IDP Support
+                  British Council Coaching Center - Partnership
                 </span>
               </div>
 
               <div>
                 <span className="text-[10px] sm:text-xs font-semibold text-slate-500 block uppercase tracking-wide">
-                  Official English Language Coaching & Testing Center
+                  British Council Coaching Center - Partnership
                 </span>
                 <h3 className="text-lg sm:text-xl lg:text-2xl font-bold font-display text-slate-900 mt-0.5 leading-snug">
-                  BCAS IELTS Masterclass & Testing Support
+                  BCAS IELTS Masterclass &amp; Testing Support
                 </h3>
               </div>
 
               <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed font-normal">
-                Aiming for Band 6.5, 7.0, or 7.5+? BCAS certified IELTS examiners and language coaches prepare you with official British Council / IDP rubrics, timed exam mock drills, and full student visa language clearing.
+                We are a British Council Coaching Center - Partnership with Qualified IELTS Trainers. Our structured mock exams, individualized feedback, and coaching provide target Band assurance that depends on each student&apos;s capacity.
               </p>
 
-              <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-1.5 sm:pt-2 border-t border-slate-100 text-[10px] sm:text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 pt-1.5 sm:pt-2 border-t border-slate-100 text-[10px] sm:text-xs">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-slate-700">Writing Task 1 & 2 Feedback</span>
+                  <span className="text-[10px] sm:text-[11px] text-slate-700">British Council Coaching Center - Partnership</span>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-slate-700">1-on-1 Mock Speaking Drills</span>
+                  <span className="text-[10px] sm:text-[11px] text-slate-700">Qualified IELTS Trainers</span>
                 </div>
-                <div className="flex items-center gap-1.5 sm:gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 sm:col-span-2">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-slate-700">Official Exam Booking</span>
-                </div>
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-600 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-slate-700">Band 7.0+ Target Prep</span>
+                  <span className="text-[10px] sm:text-[11px] text-slate-700">Depends on student&apos;s capacity target Band assurance</span>
                 </div>
               </div>
             </div>
@@ -1771,6 +1773,8 @@ export const HomePage: React.FC = () => {
                         <option value="Finland">Finland 🇫🇮</option>
                         <option value="Malta">Malta 🇲🇹</option>
                         <option value="United Arab Emirates">UAE / Dubai 🇦🇪</option>
+                        <option value="New Zealand">New Zealand 🇳🇿</option>
+                        <option value="Malaysia">Malaysia 🇲🇾</option>
                         <option value="Other / Multiple">Other Hubs 🌐</option>
                       </select>
                     </div>
@@ -1790,6 +1794,7 @@ export const HomePage: React.FC = () => {
                         <option value="Health & Applied Science">Biomedical</option>
                         <option value="Hospitality & Tourism">Hospitality</option>
                         <option value="Law & Legal Studies">Law (LLB)</option>
+                        <option value="IELTS Coaching (British Council Partnership)">IELTS Coaching</option>
                       </select>
                     </div>
 
