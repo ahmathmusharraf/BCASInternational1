@@ -349,13 +349,28 @@ export const ContactPage: React.FC = () => {
               </div>
 
               <div>
+                <label className="text-[10px] sm:text-[11px] font-semibold text-slate-300 block mb-0.5">Enquiry Topic</label>
+                <select
+                  value={contactSubject}
+                  onChange={e => setContactSubject(e.target.value)}
+                  className="w-full px-2.5 py-1.5 sm:py-2 bg-slate-900 border border-slate-700 rounded-md sm:rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition-colors"
+                >
+                  <option value="University Placement Enquiry">University Placement Enquiry (UK, Australia, Canada, Sweden, Finland &amp; more)</option>
+                  <option value="IELTS Coaching (British Council Coaching Center - Partnership)">IELTS Coaching (British Council Coaching Center - Partnership)</option>
+                  <option value="Ontario Secondary School Diploma (OSSD)">Canadian High School (OSSD)</option>
+                  <option value="Scholarship & Visa Guidance">Scholarship &amp; Student Visa Guidance</option>
+                  <option value="Campus Visit & Face-to-Face Counseling">Campus Visit &amp; Face-to-Face Counseling</option>
+                </select>
+              </div>
+
+              <div>
                 <label className="text-[10px] sm:text-[11px] font-semibold text-slate-300 block mb-0.5">Your Question or Message *</label>
                 <textarea
                   rows={2}
                   required
                   value={contactMessage}
                   onChange={e => setContactMessage(e.target.value)}
-                  placeholder="Ask about entry requirements, intakes, tuition fees, or which campus to visit..."
+                  placeholder="Ask about entry requirements, intakes, tuition fees, IELTS coaching, or which campus to visit..."
                   className="w-full px-2.5 py-1.5 sm:py-2 bg-slate-900 border border-slate-700 rounded-md sm:rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-blue-400 transition-colors"
                 />
               </div>
