@@ -108,7 +108,7 @@ export const FAQPage: React.FC = () => {
       category: 'Visa & Immigration',
       question: 'Can I work part-time while studying abroad?',
       answer:
-        'Yes. Most major international destinations grant generous student employment rights: the UK permits 20 hours/week during term-time and full-time during holidays; Australia allows 48 hours per fortnight; New Zealand allows 20 hours/week; Finland allows up to 30 hours/week; and Sweden has no weekly hour cap during studies. Minimum wages typically range from £11.44/hr in the UK to AUD $24.10/hr in Australia.',
+        'Yes. Most major international destinations grant generous student employment rights: the UK permits 20 hours/week during term-time and full-time during holidays; Australia allows 48 hours per fortnight; New Zealand allows 20 hours/week; Finland allows up to 30 hours/week; and Sweden allows Undergraduate and Master’s students to work up to 15 hours per week during term time with no hourly limit during June, July and August (subject to residence permit conditions).',
       keyPoints: [
         'Part-time earnings easily cover day-to-day groceries and transport',
         'Full-time work rights permitted during summer and winter vacations',
@@ -120,7 +120,7 @@ export const FAQPage: React.FC = () => {
       category: 'Visa & Immigration',
       question: 'What are the Post-Study Work Visa (PSWV) rights after graduation?',
       answer:
-        'International graduates can remain and work in their destination country through dedicated post-study visas: UK Graduate Route provides 18 months (3 years for PhD); Australia offers 2 to 4 years (with regional bonuses); New Zealand provides up to 3 years; Canada grants PGWP up to 3 years; and Finland/Sweden offer 1 to 2 years post-study residence permits to seek skilled employment.',
+        'International graduates can remain and work in their destination country through dedicated post-study visas: UK Graduate Route provides 18 months (3 years for PhD); Australia offers a 3-year post-study work visa; New Zealand provides up to 3 years; Canada grants PGWP up to 3 years; and Finland/Sweden offer 1 to 2 years post-study residence permits to seek skilled employment.',
       keyPoints: [
         'No employer sponsorship required to apply for initial Graduate / Post-Study visas',
         'Unrestricted employment in any field or sector during the post-study period',
