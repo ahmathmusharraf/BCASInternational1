@@ -123,7 +123,7 @@ export const SCHOLARSHIPS: Scholarship[] = [
     destination: 'United Kingdom / Australia / Canada',
     type: 'Merit-Based',
     coverage: '£1,500 – £5,000 / AUD 5,000 – 10,000 tuition fee reduction',
-    eligibility: 'Awarded to applicants with strong academic performance in A/Levels, BCAS HND, or bachelor’s degree.',
+    eligibility: 'Awarded to applicants with strong academic performance in A/Levels, Pearson BTEC HND, or bachelor’s degree.',
     deadline: 'Varies by university; recommended application 3–4 months prior to intake',
     requirements: [
       'Official academic transcripts demonstrating high academic grades (e.g., Distinction or Merit)',
@@ -314,7 +314,7 @@ export const SUCCESS_STORIES: SuccessStory[] = [
     graduationYear: '2024 Graduate',
     currentRole: 'Operations Analyst, Valletta',
     storyQuote: 'Affordable tuition, English-speaking environment, and Schengen visa travel across Europe made Malta the ideal European starting point for me.',
-    fullJourney: 'Jeremy visited the BCAS Jaffna campus looking for European degree options on a sensible budget. BCAS matched him with Global College Malta in SmartCity. He completed his degree with European accreditation and leveraged the 9-month post-study visa.',
+    fullJourney: 'Jeremy visited the BCAS Jaffna campus looking for European degree options on a sensible budget. BCAS matched him with Global College Malta in SmartCity. He completed his degree with European accreditation and leveraged Malta’s nine-month post-study residence permit.',
     adviceForStudents: 'Do not overlook Malta. It is completely English-speaking, remarkably welcoming, and offers Schengen access throughout Europe.',
     category: 'Business & Management',
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80'
@@ -588,7 +588,7 @@ export const DEMO_STUDENT_PROFILE: StudentPortalProfile = {
       description: 'Department of Examinations certified copy uploaded'
     },
     {
-      title: 'BCAS HND Transcript & Completion Letter',
+      title: 'Pearson BTEC HND Transcript & Completion Letter',
       completed: true,
       mandatory: true,
       description: 'Submitted for university credit exemption evaluation'
