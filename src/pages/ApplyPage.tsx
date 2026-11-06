@@ -603,7 +603,7 @@ export const ApplyPage: React.FC = () => {
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-[#00239C] shrink-0 mt-0.5" />
                 <span>
-                  <strong>Gather Academic Transcripts:</strong> Prepare certified copies of your G.C.E. O/L, A/L or BCAS HND results certificates.
+                  <strong>Gather Academic Transcripts:</strong> Prepare certified copies of your G.C.E. O/L, A/L or Pearson BTEC HND results certificates.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
