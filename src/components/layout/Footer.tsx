@@ -4,18 +4,64 @@ import { PageId } from '../../types';
 import { BCAS_CAMPUSES, BCAS_SOCIAL_LINKS } from '../../data/mockData';
 import { WhatsAppIcon } from '../common/WhatsAppIcon';
 import {
-  MapPin,
   Phone,
-  MessageCircle,
   ExternalLink,
   ShieldCheck,
-  ArrowUpRight,
-  Mail
+  ArrowUpRight
 } from 'lucide-react';
+
+const renderSocialIcon = (icon: string) => {
+  switch (icon) {
+    case 'facebook':
+      return (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5Z" />
+        </svg>
+      );
+    case 'instagram':
+      return (
+        <svg
+          className="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+        </svg>
+      );
+    case 'linkedin':
+      return (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M6.94 5a2 2 0 1 1-4-.002 2 2 0 0 1 4 .002ZM7 8.48H3V21h4V8.48Zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68Z" />
+        </svg>
+      );
+    case 'tiktok':
+      return (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.71a8.21 8.21 0 0 0 4.76 1.52V6.79a4.85 4.85 0 0 1-1-.1Z" />
+        </svg>
+      );
+    case 'youtube':
+      return (
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814ZM9.545 15.568V8.432L15.818 12l-6.273 3.568Z" />
+        </svg>
+      );
+    default:
+      return <ExternalLink className="w-4 h-4" />;
+  }
+};
 
 export const Footer: React.FC = () => {
   const { navigateTo, customLogoUrl } = useApp();
   const currentYear = new Date().getFullYear();
+  const socialChannels = BCAS_SOCIAL_LINKS.filter(social => social.icon !== 'external');
 
   return (
     <footer className="bg-slate-900 text-slate-300 pt-8 sm:pt-16 pb-20 md:pb-12 border-t border-slate-800">
@@ -41,20 +87,20 @@ export const Footer: React.FC = () => {
 
             <div className="pt-2">
               <span className="text-xs font-semibold text-slate-200 uppercase tracking-wider block mb-2.5">
-                Official BCAS Channels
+                Follow Us
               </span>
-              <div className="flex flex-wrap gap-2">
-                {BCAS_SOCIAL_LINKS.map(social => (
+              <div className="flex flex-wrap gap-2.5">
+                {socialChannels.map(social => (
                   <a
                     key={social.name}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     title={social.name}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-[#00239C] hover:text-white text-xs font-medium text-slate-200 rounded-lg transition-colors border border-slate-700/60"
+                    aria-label={social.name}
+                    className="inline-flex items-center justify-center w-9 h-9 bg-slate-800 hover:bg-[#00239C] text-slate-200 hover:text-white rounded-lg transition-colors border border-slate-700/60"
                   >
-                    <span>{social.name}</span>
-                    <ArrowUpRight className="w-3 h-3 opacity-70" />
+                    {renderSocialIcon(social.icon)}
                   </a>
                 ))}
               </div>
@@ -185,10 +231,10 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 4: Contact & Campuses Quick Access */}
+          {/* Column 4: Branches & Contact Us */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-              Sri Lanka Campuses
+              Our Branches
             </h4>
             <div className="space-y-2.5 text-xs text-slate-300">
               {BCAS_CAMPUSES.map(campus => (
@@ -221,20 +267,16 @@ export const Footer: React.FC = () => {
                   </div>
                 </div>
               ))}
-              <div className="pt-2 border-t border-slate-800 flex items-center gap-1.5 text-xs text-slate-300">
-                <Mail className="w-3.5 h-3.5 text-blue-300 shrink-0" />
-                <span>Email:</span>
-                <a href="mailto:Digital_Int@bcas.lk" className="text-blue-300 hover:text-white font-medium">
-                  Digital_Int@bcas.lk
-                </a>
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => navigateTo('contact')}
+                  className="text-xs font-semibold text-blue-300 hover:text-white inline-flex items-center gap-1 cursor-pointer transition-colors"
+                >
+                  <span>Contact Us</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
               </div>
-              <button
-                onClick={() => navigateTo('contact')}
-                className="text-xs font-semibold text-blue-300 hover:text-white inline-flex items-center gap-1 pt-1 cursor-pointer"
-              >
-                <span>View all campus maps & directions</span>
-                <span>→</span>
-              </button>
             </div>
           </div>
         </div>
