@@ -156,11 +156,12 @@ export const FAQPage: React.FC = () => {
       category: 'BCAS HND & Top-Up',
       question: 'What is the Canadian OSSD pathway at BCAS for O/Level students?',
       answer:
-        'The Ontario Secondary School Diploma (OSSD), offered in partnership with Canadian International Academy (CIA), allows Sri Lankan students who have completed G.C.E. O/Levels to earn an official Canadian high school diploma in just 10 months without sitting for local A/Levels. An OSSD diploma provides direct admission into top universities across Canada, the UK, Australia, and the US as a local Ontario applicant (OUAC 101).',
+        'The Ontario Secondary School Diploma (OSSD), offered in partnership with Cambridge International Academy (CIA) and Canadian Cross International School (CCIS), allows Sri Lankan students who have completed or are pending G.C.E. O/Levels to earn an official Canadian high school diploma in 10–12 months with Canadian teachers and flexible learning. Alongside 7 core and stream modules after credit evaluation, students complete 40 hours of community involvement and the Ontario literacy requirement for direct admission into top universities across Canada, the UK, Australia, and the US.',
       keyPoints: [
-        'Skip 2.5 years of stressful local A/Levels with continuous assessment',
-        'Direct entry into University of Toronto, Waterloo, UBC, McMaster, etc.',
-        'Registered Ontario Ministry of Education inspection number (BSID)'
+        'Taught by qualified Canadian teachers via CIA & Canadian Cross International School (CCIS)',
+        'Flexible online & hybrid learning with continuous assessment (70% coursework / 30% final evaluation)',
+        'Graduation includes credit evaluation + 7 modules, Ontario literacy, and 40 community hours',
+        'Direct entry into University of Toronto, Waterloo, UBC, McMaster, and leading global universities'
       ]
     }
   ];
