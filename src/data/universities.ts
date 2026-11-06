@@ -51,7 +51,7 @@ export const UNIVERSITIES: University[] = [
     highlights: [
       'Nottingham Business School holds prestigious Triple Crown accreditation',
       'Named UK University of the Year and ranked top 20 for student experience',
-      'Direct top-up progression and generous credit transfer for BCAS HND diplomas',
+      'Direct top-up progression and generous credit transfer for Pearson BTEC HND diplomas',
       'International scholarships up to 50% tuition reduction'
     ],
     scholarshipAvailable: true,
@@ -711,7 +711,7 @@ export const UNIVERSITIES: University[] = [
     highlights: [
       'Low cost of living compared to London, making study very affordable',
       'Outstanding engineering labs and moot court facilities',
-      'Well-established Top-Up degree arrangements for BCAS HND students',
+      'Well-established Top-Up degree arrangements for Pearson BTEC HND students',
       'Lord Paul international scholarships available'
     ],
     scholarshipAvailable: true,
@@ -1603,8 +1603,8 @@ export const UNIVERSITIES: University[] = [
     highlights: [
       'Dual award pathways with leading British universities (University of Chester)',
       'Located in SmartCity Malta, the Mediterranean’s leading business and tech park',
-      'Low cost of living, 20 hrs/week student work rights & 9-month EU graduate visa',
-      'Direct credit recognition and fast-track admissions for BCAS HND holders'
+      '20 hrs/week student work rights & nine-month post-study residence permit',
+      'Direct credit recognition and fast-track admissions for Pearson BTEC HND holders'
     ],
     scholarshipAvailable: true,
     description: 'Dynamic British-modeled business and technology college in Malta offering affordable European qualifications with UK university progression.',
@@ -3009,7 +3009,7 @@ export const UNIVERSITIES: University[] = [
       'Ranked #1 for student satisfaction and workplace readiness among NZ polytechnics',
       'Modern Auckland International Campus and historic Dunedin university precinct',
       'Work-based learning projects solving real-world challenges for regional employers',
-      'Clear credit exemptions for BCAS HND diploma qualifications'
+      'Clear credit exemptions for Pearson BTEC HND diploma qualifications'
     ],
     scholarshipAvailable: true,
     description: 'A leader in hands-on practical education, career readiness, and applied business management in Dunedin and Auckland.',
