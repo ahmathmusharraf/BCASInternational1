@@ -95,7 +95,7 @@ export const CoursesPage: React.FC = () => {
                   Canadian High School Qualification
                 </span>
                 <span className="px-1.5 py-0.2 rounded bg-white/20 text-[9px] font-semibold">
-                  Cambridge International Academy (CIA)
+                  CIA × Canadian Cross International School (CCIS)
                 </span>
               </div>
               <h3 className="text-xs sm:text-sm font-bold text-white mt-0.5">
