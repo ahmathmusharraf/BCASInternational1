@@ -246,7 +246,9 @@ export const DestinationsPage: React.FC = () => {
             </div>
 
             <div className="p-3.5 sm:p-4 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-1">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Post-Study Visa Rights</span>
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                {viewingDestination.id === 'malta' ? 'Post-Study Residence Permit' : 'Post-Study Visa Rights'}
+              </span>
               <span className="text-xs sm:text-sm font-semibold text-slate-900 block">
                 {viewingDestination.postStudyWorkVisa}
               </span>
