@@ -1217,10 +1217,10 @@ export const HomePage: React.FC = () => {
                       {dest.currency}
                     </div>
 
-                    {/* Post-Study Visa Ribbon */}
+                    {/* Post-Study Visa / Permit Ribbon */}
                     <div className="absolute bottom-2 left-2.5 right-2.5 text-white">
                       <span className="text-[9px] sm:text-[10px] text-blue-200 font-bold uppercase tracking-wider block">
-                        Post-Study Work Visa
+                        {dest.id === 'malta' ? 'Post-Study Residence Permit' : 'Post-Study Work Visa'}
                       </span>
                       <p className="text-[11px] sm:text-xs font-semibold leading-tight line-clamp-1 text-white">
                         {dest.postStudyWorkVisa}
