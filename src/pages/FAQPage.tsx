@@ -37,7 +37,7 @@ export const FAQPage: React.FC = () => {
     'All',
     'Admissions & Eligibility',
     'Visa & Immigration',
-    'BCAS HND & Top-Up',
+    'HND & Top-Up',
     'Scholarships & Fees',
     'IELTS & English'
   ];
@@ -69,10 +69,10 @@ export const FAQPage: React.FC = () => {
     },
     {
       id: 'hnd-transfer',
-      category: 'BCAS HND & Top-Up',
-      question: 'How does credit transfer from a BCAS Pearson BTEC HND to an overseas Top-Up degree work?',
+      category: 'HND & Top-Up',
+      question: 'How does credit transfer from a Pearson BTEC HND to an overseas Top-Up degree work?',
       answer:
-        'Completing a Pearson BTEC Higher National Diploma (HND) at BCAS equals the first two years (Level 4 & 5) of a British bachelor’s degree (240 UK credits). Partner universities in the UK, Australia, Canada, New Zealand, and Malaysia grant direct entry into Year 3 (final Top-Up year). You graduate with the exact same university degree certificate as students who studied all 3 years abroad, saving up to 60% on total overseas tuition and living expenses.',
+        'Completing a Pearson BTEC Higher National Diploma (HND) equals the first two years (Level 4 & 5) of a British bachelor’s degree (240 UK credits). Partner universities in the UK, Australia, Canada, New Zealand, and Malaysia grant direct entry into Year 3 (final Top-Up year). You graduate with the exact same university degree certificate as students who studied all 3 years abroad, saving up to 60% on total overseas tuition and living expenses.',
       keyPoints: [
         'Transfer into the final year (Level 6) of BSc / BEng / BA / BBA degrees',
         'Save £25,000 to £40,000 on foreign tuition and overseas accommodation',
@@ -84,7 +84,7 @@ export const FAQPage: React.FC = () => {
       category: 'Visa & Immigration',
       question: 'Does BCAS guarantee student visa approval?',
       answer:
-        'No ethical education consultancy can legitimately guarantee a visa outcome. The final decision rests solely with sovereign government immigration authorities (such as UK Visas and Immigration, Australian Department of Home Affairs, or Immigration New Zealand). What BCAS provides is strict compliance verification, financial audit checking, and genuine student interview coaching that has yielded a 99% verified visa success rate across 25+ years.',
+        'No ethical education consultancy can legitimately guarantee a visa outcome. The final decision rests solely with sovereign government immigration authorities (such as UK Visas and Immigration, Australian Department of Home Affairs, Immigration, Refugees and Citizenship Canada (IRCC), or Immigration New Zealand). What BCAS provides is strict compliance verification, financial audit checking, and genuine student interview coaching that has yielded a 99% verified visa success rate across 25+ years.',
       keyPoints: [
         'Detailed financial documentation review (28-day holding rules, OANDA conversion)',
         'Comprehensive mock interview drills with experienced compliance officers',
@@ -96,7 +96,7 @@ export const FAQPage: React.FC = () => {
       category: 'Scholarships & Fees',
       question: 'What scholarships are available for Sri Lankan international students?',
       answer:
-        'Partner universities offer automatic regional bursaries (£1,500 – £4,000 / AUD 5,000 – 10,000), early bird deposit incentives, and competitive merit scholarships (up to 50% tuition reduction). Unlike full-ride government awards that require separate complex applications, many university merit discounts are automatically assessed when BCAS submits your academic profile.',
+        'Partner universities offer automatic regional bursaries (£1,500 – £4,000 / AUD 5,000 – 10,000 / CAD 2,000 – 10,000), early bird deposit incentives, and competitive merit scholarships (up to 50% tuition reduction). Unlike full-ride government awards that require separate complex applications, many university merit discounts are automatically assessed when BCAS submits your academic profile.',
       keyPoints: [
         'Automatic regional bursaries applied directly on your offer letter',
         'Dean’s and Vice-Chancellor’s scholarships for A/Level and HND high achievers',
@@ -108,21 +108,21 @@ export const FAQPage: React.FC = () => {
       category: 'Visa & Immigration',
       question: 'Can I work part-time while studying abroad?',
       answer:
-        'Yes. Most major international destinations grant generous student employment rights: the UK permits 20 hours/week during term-time and full-time during holidays; Australia allows 48 hours per fortnight; New Zealand allows 20 hours/week; Finland allows up to 30 hours/week; and Sweden allows Undergraduate and Master’s students to work up to 15 hours per week during term time with no hourly limit during June, July and August (subject to residence permit conditions).',
+        'Yes. Most major international destinations grant generous student employment rights: the UK permits 20 hours/week during term-time and full-time during holidays; Australia allows 48 hours per fortnight; Canada permits up to 24 hours per week off-campus during academic sessions and full-time during scheduled breaks; New Zealand allows 20 hours/week; Finland allows up to 30 hours/week; Sweden allows Undergraduate and Master’s students to work up to 15 hours per week during term time with no hourly limit during June, July and August (subject to residence permit conditions); and Malta allows up to 20 hours/week after completing the first 90 days of study.',
       keyPoints: [
-        'Part-time earnings easily cover day-to-day groceries and transport',
-        'Full-time work rights permitted during summer and winter vacations',
+        'Part-time earnings help cover day-to-day living, groceries, and transport costs',
+        'Full-time work rights permitted during summer and scheduled academic breaks (including Canada Co-op & vacation terms)',
         'On-campus and off-campus career services available at all partner institutions'
       ]
     },
     {
       id: 'post-study-work',
       category: 'Visa & Immigration',
-      question: 'What are the Post-Study Work Visa (PSWV) rights after graduation?',
+      question: 'What are the Post-Study Work Visa and Permit rights after graduation?',
       answer:
-        'International graduates can remain and work in their destination country through dedicated post-study visas: UK Graduate Route provides 18 months (3 years for PhD); Australia offers a 3-year post-study work visa; New Zealand provides up to 3 years; Canada grants PGWP up to 3 years; and Finland/Sweden offer 1 to 2 years post-study residence permits to seek skilled employment.',
+        'International graduates can remain and work in their destination country through dedicated post-study visas and residence permits: the UK Graduate Route provides 18 months (3 years for PhD); Australia offers a 3-year post-study work visa; Canada grants a Post-Graduation Work Permit (PGWP) of up to 3 years based on programme length; New Zealand provides up to 3 years; Finland offers a 2-year post-study residence permit; Sweden offers a 1-year post-graduation residence permit; and Malta provides a nine-month post-study residence permit to seek employment.',
       keyPoints: [
-        'No employer sponsorship required to apply for initial Graduate / Post-Study visas',
+        'Canada PGWP (up to 3 years), UK Graduate Route, and Australia PSWV require no initial employer sponsorship',
         'Unrestricted employment in any field or sector during the post-study period',
         'Direct pathways into employer-sponsored permanent residence (PR) systems'
       ]
@@ -153,8 +153,8 @@ export const FAQPage: React.FC = () => {
     },
     {
       id: 'canada-ossd',
-      category: 'BCAS HND & Top-Up',
-      question: 'What is the Canadian OSSD pathway at BCAS for O/Level students?',
+      category: 'HND & Top-Up',
+      question: 'What is the Canadian OSSD pathway for O/Level students?',
       answer:
         'The Ontario Secondary School Diploma (OSSD), offered in partnership with Cambridge International Academy (CIA) and Canadian Cross International School (CCIS), allows Sri Lankan students who have completed or are pending G.C.E. O/Levels to earn an official Canadian high school diploma in 10–12 months with Canadian teachers and flexible learning. Alongside 7 core and stream modules after credit evaluation, students complete 40 hours of community involvement and the Ontario literacy requirement for direct admission into top universities across Canada, the UK, Australia, and the US.',
       keyPoints: [
