@@ -1327,7 +1327,7 @@ export const HomePage: React.FC = () => {
                   <span>🇨🇦 CANADIAN HIGH SCHOOL QUALIFICATION</span>
                 </span>
                 <span className="px-2 py-0.2 sm:py-0.5 rounded-full bg-white/10 text-blue-200 text-[9px] sm:text-[10px] font-semibold">
-                  Ontario Ministry of Education
+                  CIA × Canadian Cross International School (CCIS)
                 </span>
               </div>
 
@@ -1341,25 +1341,25 @@ export const HomePage: React.FC = () => {
               </div>
 
               <p className="text-[11px] sm:text-xs text-blue-100 leading-relaxed font-normal">
-                Study the world-renowned Canadian High School qualification in Sri Lanka. The OSSD credential grants <strong>direct admission into top universities across Canada (U of Toronto, Waterloo, UBC, McGill)</strong>, UK Russell Group, and Australia without foundation years!
+                Study the world-renowned Canadian High School qualification delivered with <strong>Cambridge International Academy (CIA) &amp; Canadian Cross International School (CCIS)</strong>. Learn with <strong>Canadian teachers</strong> via <strong>flexible learning</strong> for direct admission into top universities across Canada, the UK, and Australia without foundation years.
               </p>
 
               <div className="grid grid-cols-2 gap-1.5 sm:gap-2 pt-1.5 sm:pt-2 border-t border-white/10 text-[10px] sm:text-xs">
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-blue-100">Enrol with G.C.E. O/L or A/L</span>
+                  <span className="text-[10px] sm:text-[11px] text-blue-100">Canadian Teachers &amp; Curriculum</span>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-blue-100">Direct Canada Study Permit</span>
+                  <span className="text-[10px] sm:text-[11px] text-blue-100">Flexible Online / Hybrid Learning</span>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-blue-100">High-Tier Scholarships</span>
+                  <span className="text-[10px] sm:text-[11px] text-blue-100">7 Modules + 40 Community Hours</span>
                 </div>
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
-                  <span className="text-[10px] sm:text-[11px] text-blue-100">10-12 Mo Fast-Track</span>
+                  <span className="text-[10px] sm:text-[11px] text-blue-100">Direct University Entry</span>
                 </div>
               </div>
             </div>
