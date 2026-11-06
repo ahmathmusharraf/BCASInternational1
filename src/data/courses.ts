@@ -45,15 +45,15 @@ export const COURSES: Course[] = [
     level: 'Foundation',
     duration: '10 - 12 Months (Fast-Track available)',
     popularDestinations: ['Canada', 'United Kingdom', 'Australia', 'United States'],
-    overview: 'Earn the prestigious Canadian High School Diploma delivered in Sri Lanka through the official partnership between Cambridge International Academy and BCAS International University Placements. Fully recognized by the Ontario Ministry of Education, the OSSD provides direct admission to premier universities across Canada (University of Toronto, Waterloo, UBC, McGill) and worldwide without requiring a local foundation year.',
+    overview: 'Earn the prestigious Canadian High School Diploma delivered through the official partnership between Cambridge International Academy (CIA), Canadian Cross International School (CCIS, Ontario, Canada), and BCAS International University Placements. Taught by Canadian teachers with flexible online and hybrid learning, the OSSD provides direct admission to premier universities across Canada (University of Toronto, Waterloo, UBC, McGill) and worldwide without requiring a foundation year.',
     keyModules: [
-      'Grade 12 University Preparation English (ENG4U)',
-      'Advanced Functions (MHF4U)',
-      'Calculus & Vectors (MCV4U)',
-      'Mathematics of Data Management (MDM4U)',
-      'Business Leadership & Management Fundamentals',
-      'Computer Science & Information Technology',
-      'Canadian & International Law'
+      'Grade 11 & 12 University Preparation English (ENG3U & ENG4U)',
+      'Advanced Functions (MHF4U) & Calculus and Vectors (MCV4U)',
+      'Biology (SBI4U), Chemistry (SCH4U) & Physics (SPH4U)',
+      'International Business (BBB4M), Management (BOH4M) & Economics (CIA4U)',
+      'Mathematics for Data Management (MDM4U)',
+      'Ontario Secondary School Literacy Requirement',
+      '40 Hours of Community Involvement Activities'
     ],
     careerOpportunities: [
       'Direct Canadian University Admissions (U of T, Waterloo, UBC, McGill)',
@@ -61,7 +61,7 @@ export const COURSES: Course[] = [
       'Higher Eligibility for High-Tier Canadian Entrance Scholarships',
       'Smooth Study Permit & Canadian Student Visa Processing'
     ],
-    entryRequirements: 'G.C.E. O/L completed with minimum 5 passes/credits including English and Mathematics, or partial G.C.E. A/L studies. Direct assessment available.',
+    entryRequirements: 'G.C.E. O/L completed or pending (Sri Lankan, Cambridge, or Edexcel) with academic qualification assessment and credit evaluation.',
     image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80'
   },
   {
