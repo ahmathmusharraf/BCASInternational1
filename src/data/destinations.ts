@@ -164,13 +164,13 @@ export const DESTINATIONS: Destination[] = [
     name: 'Malta',
     code: 'MT',
     flag: '🇲🇹',
-    tagline: 'English-speaking EU island, affordable Schengen degrees & 9-month post-study visa',
+    tagline: 'English-speaking EU island, affordable Schengen degrees & nine-month post-study residence permit',
     heroImage: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?auto=format&fit=crop&w=1200&q=80',
-    overview: 'Malta is an English-speaking European Union archipelago located in the sunny Mediterranean. With affordable tuition rates, recognized European bachelor’s and master’s programmes, and Schengen visa privileges, it offers unmatched value for international students.',
+    overview: 'Malta is an English-speaking European Union archipelago located in the sunny Mediterranean. With annual tuition of EUR €7,500 – €14,000, living expenses of approximately €900–€1,400 per month (€10,800–€16,800 annually), Schengen mobility, and a nine-month post-study residence permit, it offers strong value for international students.',
     avgTuitionPerYear: 'EUR €7,500 – €14,000',
-    avgLivingPerYear: 'EUR €7,000 – €11,000 / year',
+    avgLivingPerYear: '€900–€1,400 / month (€10,800–€16,800 annually)',
     workDuringStudy: 'Up to 20 hours/week after completing the first 90 days of study',
-    postStudyWorkVisa: '9-Month post-study work visa for graduates to seek employment across Malta and the EU',
+    postStudyWorkVisa: 'Nine-month post-study residence permit for graduates to seek employment across Malta',
     primaryIntakes: 'October (Autumn) and February (Spring)',
     currency: 'EUR (€)',
     officialImmigrationName: 'Identità Malta (Central Visa Unit)',
@@ -178,7 +178,7 @@ export const DESTINATIONS: Destination[] = [
     popularCities: ['Valletta', 'Msida', 'St. Julian’s', 'Sliema'],
     topReasons: [
       'Official English-speaking nation within the European Union',
-      'Highly affordable tuition and living expenses compared to Western Europe',
+      'Nine-month post-study residence permit to seek graduate employment after completing your degree',
       'Full Schengen visa mobility to travel throughout 29 European countries',
       'Fast-growing European center for Financial Technology, iGaming, and Tourism'
     ]
@@ -228,7 +228,7 @@ export const DESTINATIONS: Destination[] = [
       'All 8 New Zealand state universities rank in the global top 3% (QS Rankings)',
       'Generous 3-year open Post-Study Work Visa for bachelor and master graduates',
       'Safe, tranquil study environment ranked #2 in the Global Peace Index',
-      'Straightforward credit transfer for BCAS diploma and HND holders'
+      'Straightforward credit transfer for diploma and Pearson BTEC HND holders'
     ]
   },
   {
