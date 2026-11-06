@@ -215,8 +215,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         description: 'Discover undergraduate degrees, Master’s programs, and Pearson BTEC HND top-up routes in Computing, Business, Engineering, Law, and Health.'
       },
       ossd: {
-        title: 'Canadian High School (OSSD) in Sri Lanka | Cambridge International Academy & BCAS',
-        description: 'Study Canadian OSSD in Sri Lanka (BSID: 669463). Fast-track pathway to world top universities in Canada, UK, and Australia without foundation.'
+        title: 'Canadian High School (OSSD) | CIA, CCIS & BCAS International Placements',
+        description: 'Study the Canadian Ontario Secondary School Diploma (OSSD) with Cambridge International Academy (CIA), Canadian Cross International School (CCIS), and BCAS. Canadian teachers, flexible learning, and direct global university entry.'
       },
       ielts: {
         title: 'Study IELTS | The Qualification You Need to Go Abroad | BCAS Campus',
