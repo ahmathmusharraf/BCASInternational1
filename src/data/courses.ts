@@ -94,7 +94,7 @@ export const COURSES: Course[] = [
     title: 'Computing, Software Engineering & AI',
     category: 'Computing',
     level: 'Bachelor’s',
-    duration: '3 Years (or 1-Year Top-Up after BCAS HND)',
+    duration: '3 Years (or 1-Year Top-Up after Pearson BTEC HND)',
     popularDestinations: ['United Kingdom', 'Australia', 'Canada', 'Sweden', 'Finland'],
     overview: 'Gain comprehensive mastery of modern software development, data structures, algorithms, cybersecurity, cloud architecture, and artificial intelligence.',
     keyModules: [
@@ -120,7 +120,7 @@ export const COURSES: Course[] = [
     title: 'Business Administration & International Management',
     category: 'Business',
     level: 'Bachelor’s',
-    duration: '3 Years (or 1-Year Top-Up after BCAS HND)',
+    duration: '3 Years (or 1-Year Top-Up after Pearson BTEC HND)',
     popularDestinations: ['United Kingdom', 'Australia', 'Canada', 'Malta', 'United Arab Emirates'],
     overview: 'Equip yourself for global corporate leadership, modern strategic management, digital marketing, business analytics, and global trade operations.',
     keyModules: [
@@ -146,7 +146,7 @@ export const COURSES: Course[] = [
     title: 'Civil & Construction Engineering',
     category: 'Engineering',
     level: 'Bachelor’s',
-    duration: '3 to 4 Years (Transferable from BCAS HND in Civil Engineering)',
+    duration: '3 to 4 Years (Transferable from Pearson BTEC HND in Civil Engineering)',
     popularDestinations: ['United Kingdom', 'Australia', 'Canada', 'Finland', 'United Arab Emirates'],
     overview: 'Design, build and maintain resilient infrastructure. Learn structural mechanics, geotechnical engineering, sustainable construction materials, and BIM.',
     keyModules: [
