@@ -11,13 +11,20 @@ export const WhatsAppFloatingButton: React.FC = () => {
       className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 flex items-center gap-2"
     >
       {showTooltip && (
-        <div className="hidden sm:flex items-center gap-2 bg-white text-slate-800 text-xs font-semibold px-3 py-2 rounded-xl shadow-xl border border-slate-200/80 animate-fade-in">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-          <span>Chat with Admissions Desk</span>
+        <div className="hidden sm:flex items-center gap-1.5 bg-white text-slate-800 text-xs font-semibold pl-3 pr-2 py-2 rounded-xl shadow-xl border border-slate-200/80 animate-fade-in hover:border-emerald-300 transition-colors">
+          <a
+            href="https://wa.me/94761415273?text=Hi%20BCAS,%20I%20would%20like%20to%20inquire%20about%20studying%20abroad%20and%20university%20admissions."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:text-emerald-700 transition-colors cursor-pointer"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping shrink-0" />
+            <span>Chat with Admissions Desk</span>
+          </a>
           <button
             type="button"
             onClick={() => setShowTooltip(false)}
-            className="text-slate-400 hover:text-slate-600 p-0.5 rounded cursor-pointer"
+            className="text-slate-400 hover:text-slate-600 p-0.5 rounded cursor-pointer ml-0.5"
             aria-label="Dismiss WhatsApp tip"
           >
             <X className="w-3 h-3" />
